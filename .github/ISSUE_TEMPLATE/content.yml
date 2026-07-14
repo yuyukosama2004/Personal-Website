@@ -1,0 +1,24 @@
+name: Content
+description: Plan a project case study or blog post
+title: 'content: '
+labels: ['type:content', 'area:content']
+body:
+  - type: input
+    id: audience
+    attributes:
+      label: Intended audience
+    validations:
+      required: true
+  - type: textarea
+    id: promise
+    attributes:
+      label: Reader promise
+      description: What will the reader understand or be able to do?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and source material
+    validations:
+      required: true

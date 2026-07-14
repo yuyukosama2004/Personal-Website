@@ -1,0 +1,64 @@
+---
+import { site } from '@/config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="site-shell footer-inner">
+    <div>
+      <p class="footer-mark">{site.name}</p>
+      <p>可控、可验证的 AI 工具与真实开发实践。</p>
+    </div>
+    <div class="footer-links">
+      <a href="/rss.xml">RSS</a>
+      <a href="/about">关于</a>
+      <a href={site.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+    </div>
+    <p class="copyright">© {year} {site.author}</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: 7rem;
+    padding: 3.5rem 0 6.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+  }
+
+  .footer-inner p {
+    margin: 0.25rem 0;
+  }
+
+  .footer-mark {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-weight: 800;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 1rem;
+  }
+
+  .copyright {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 40rem) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import SiteFooter from '@/components/SiteFooter.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import { site } from '@/config/site';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  image,
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.url);
+const socialImage = image ? new URL(image, site.url) : undefined;
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f5f3ed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11130f" media="(prefers-color-scheme: dark)" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('execute42-theme');
+        const preferred = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme =
+          stored === 'dark' || stored === 'light' ? stored : preferred;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <SiteHeader />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>
