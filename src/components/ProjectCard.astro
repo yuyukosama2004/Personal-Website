@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+const { name, tagline, status, category, tech, accent } = project.data;
+---
+
+<article class="project-card panel" style={`--project-accent: ${accent}`}>
+  <a href={`/projects/${project.id}/`} aria-label={`查看 ${name} 项目`}>
+    <div class="card-top">
+      <span>{String(index + 1).padStart(2, '0')} / {category}</span>
+      <span class="status">{status}</span>
+    </div>
+    <div class="project-mark" aria-hidden="true">{name.slice(0, 2).toUpperCase()}</div>
+    <div>
+      <h3>{name}</h3>
+      <p>{tagline}</p>
+      <ul aria-label="技术栈">
+        {tech.slice(0, 4).map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    overflow: hidden;
+    min-height: 26rem;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--project-accent) 60%, var(--line));
+  }
+
+  a {
+    display: flex;
+    height: 100%;
+    min-height: inherit;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.4rem;
+    text-decoration: none;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .status {
+    color: var(--project-accent);
+  }
+
+  .project-mark {
+    display: grid;
+    width: 6.8rem;
+    height: 6.8rem;
+    place-items: center;
+    align-self: end;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--project-accent) 18%, transparent);
+    color: var(--project-accent);
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 800;
+    transform: rotate(8deg);
+  }
+
+  h3 {
+    margin: 0 0 0.65rem;
+    font-size: 1.65rem;
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    gap: 0.45rem;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+</style>

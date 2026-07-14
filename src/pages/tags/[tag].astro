@@ -1,0 +1,44 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import PostCard from '@/components/PostCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { byPublishedDesc, uniqueTags } from '@/utils/content';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(byPublishedDesc);
+  return uniqueTags(posts).map((tag) => ({
+    params: { tag },
+    props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) },
+  }));
+}
+interface Props {
+  tag: string;
+  posts: CollectionEntry<'blog'>[];
+}
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`} description={`所有关于 ${tag} 的文章。`}>
+  <section class="site-shell page-intro">
+    <a href="/blog">← 返回博客</a><p class="eyebrow">TOPIC</p><h1 class="display-title">
+      #{tag}
+    </h1><p class="lede">{posts.length} 篇文章</p>
+  </section>
+  <section class="site-shell posts">{posts.map((post) => <PostCard post={post} />)}</section>
+</BaseLayout>
+<style>
+  .page-intro {
+    padding-block: 8rem 4rem;
+  }
+  .page-intro > a {
+    display: inline-block;
+    margin-bottom: 3rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-decoration: none;
+  }
+  .posts {
+    padding-bottom: 6rem;
+  }
+</style>

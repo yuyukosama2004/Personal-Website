@@ -1,0 +1,341 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import TableOfContents from '@/components/TableOfContents.astro';
+import { site } from '@/config/site';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { formatDate } from '@/utils/content';
+import { getReadingTime } from '@/utils/reading-time';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  headings: Heading[];
+  previous?: CollectionEntry<'blog'>;
+  next?: CollectionEntry<'blog'>;
+}
+
+const { post, headings, previous, next } = Astro.props;
+const minutes = getReadingTime(post.body ?? '');
+const canonical = `${site.url}/blog/${post.id}/`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishedAt.toISOString(),
+  dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+  inLanguage: site.language,
+  mainEntityOfPage: canonical,
+  author: { '@type': 'Person', name: site.author, url: site.url },
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  structuredData={structuredData}
+>
+  <article>
+    <header class="reading-shell article-header">
+      <div class="article-meta">
+        <time datetime={post.data.publishedAt.toISOString()}
+          >{formatDate(post.data.publishedAt)}</time
+        >
+        <span>{minutes} 分钟阅读</span>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      <ul aria-label="文章标签">
+        {
+          post.data.tags.map((tag) => (
+            <li>
+              <a href={`/tags/${tag}/`}>#{tag}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </header>
+
+    <div class="article-grid site-shell">
+      <aside><TableOfContents headings={headings} /></aside>
+      <div class="prose-content"><slot /></div>
+      <aside class="article-side">
+        <p>Written by</p>
+        <a href={site.github} target="_blank" rel="noreferrer">{site.author} ↗</a>
+      </aside>
+    </div>
+
+    <nav class="reading-shell post-navigation" aria-label="上一篇和下一篇文章">
+      {
+        previous ? (
+          <a href={`/blog/${previous.id}/`}>
+            <span>上一篇</span>
+            {previous.data.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a class="next" href={`/blog/${next.id}/`}>
+            <span>下一篇</span>
+            {next.data.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+  <script>
+    const copyText = async (text: string) => {
+      try {
+        await Promise.race([
+          navigator.clipboard.writeText(text),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Clipboard request timed out')), 250),
+          ),
+        ]);
+        return;
+      } catch {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.append(textarea);
+        textarea.select();
+        const copied = document.execCommand('copy');
+        textarea.remove();
+        if (!copied) throw new Error('Copy command was rejected');
+      }
+    };
+
+    for (const block of document.querySelectorAll<HTMLElement>('.prose-content pre')) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'copy-code';
+      button.textContent = '复制';
+      button.setAttribute('aria-label', '复制代码');
+      button.addEventListener('click', async () => {
+        const code = block.querySelector('code')?.textContent ?? '';
+        try {
+          await copyText(code);
+          button.textContent = '已复制';
+        } catch {
+          button.textContent = '复制失败';
+        }
+        setTimeout(() => (button.textContent = '复制'), 1400);
+      });
+      block.append(button);
+    }
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .article-header {
+    padding-block: 7rem 4rem;
+  }
+
+  .article-meta {
+    display: flex;
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    gap: 1.25rem;
+  }
+
+  .article-header h1 {
+    max-width: 18ch;
+    margin: 0;
+    font-size: clamp(2.5rem, 7vw, 5.6rem);
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+
+  .article-header > p {
+    max-width: 43rem;
+    margin: 1.5rem 0;
+    color: var(--muted);
+    font-size: 1.15rem;
+  }
+
+  .article-header ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    gap: 0.8rem;
+    list-style: none;
+  }
+
+  .article-header li a {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-decoration: none;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.25fr) minmax(0, var(--reading)) minmax(8rem, 0.2fr);
+    justify-content: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .article-side {
+    position: sticky;
+    top: 6.5rem;
+    align-self: start;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .article-side p {
+    margin: 0 0 0.35rem;
+  }
+
+  .prose-content {
+    min-width: 0;
+    font-size: 1.04rem;
+    line-height: 1.86;
+  }
+
+  .prose-content h2,
+  .prose-content h3 {
+    scroll-margin-top: 7rem;
+    color: var(--text);
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+
+  .prose-content h2 {
+    margin: 3.5rem 0 1rem;
+    font-size: 2rem;
+  }
+
+  .prose-content h3 {
+    margin: 2.5rem 0 0.75rem;
+    font-size: 1.35rem;
+  }
+
+  .prose-content p,
+  .prose-content li {
+    color: color-mix(in srgb, var(--text) 88%, var(--muted));
+  }
+
+  .prose-content a {
+    color: var(--accent-strong);
+  }
+
+  .prose-content blockquote {
+    margin: 2rem 0;
+    padding: 0.2rem 0 0.2rem 1.4rem;
+    border-left: 3px solid var(--accent);
+    color: var(--muted);
+    font-size: 1.08rem;
+  }
+
+  .prose-content pre {
+    position: relative;
+    overflow-x: auto;
+    margin: 1.8rem 0;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #0d110b !important;
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  .prose-content :not(pre) > code {
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.35rem;
+    background: var(--accent-soft);
+    color: var(--code);
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  .prose-content .copy-code {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.4rem;
+    background: rgba(0, 0, 0, 0.38);
+    color: #dfe8c1;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+  }
+
+  .prose-content table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .prose-content th,
+  .prose-content td {
+    padding: 0.7rem;
+    border: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .post-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+    gap: 2rem;
+  }
+
+  .post-navigation a {
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .post-navigation a span {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+  }
+
+  .post-navigation .next {
+    text-align: right;
+  }
+
+  @media (max-width: 66rem) {
+    .article-grid {
+      grid-template-columns: minmax(0, var(--reading));
+    }
+
+    .article-grid > aside:first-child {
+      order: 0;
+    }
+
+    .prose-content {
+      order: 1;
+    }
+
+    .article-side {
+      display: none;
+    }
+  }
+</style>

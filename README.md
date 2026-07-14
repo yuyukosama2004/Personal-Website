@@ -17,6 +17,17 @@ corepack pnpm dev
 corepack pnpm verify
 ```
 
+构建会依次生成 Astro 静态页面与 Pagefind 全文索引。博客文章放在
+`src/content/blog`，项目案例放在 `src/content/projects`；Frontmatter 会由 Content
+Collections schema 在构建时校验。
+
+## Content routes
+
+- `/projects/`：项目列表与详情
+- `/blog/`：Markdown 博客、标签和相关文章
+- `/search/`：浏览器本地全文搜索
+- `/rss.xml`：文章订阅
+
 ## Project management
 
 - [完整开发计划](./DEVELOPMENT_PLAN.md)
