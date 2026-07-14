@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+install -d -o webdeploy -g webdeploy /var/www/personal-website/reports
+/var/www/personal-website/bin/monthly-traffic-report
+chown webdeploy:webdeploy /var/www/personal-website/reports/*.md

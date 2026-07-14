@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { site } from '@/config/site';
+import { Image } from 'astro:assets';
+import identityImage from '../../public/images/identity-42.png';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -24,11 +26,13 @@ const structuredData = {
 >
   <section class="site-shell about">
     <div class="identity">
-      <img
-        src="/images/identity-42.png"
+      <Image
+        src={identityImage}
         alt="execute42 的 42 验证标记"
-        width="1536"
-        height="1536"
+        width={768}
+        height={768}
+        format="webp"
+        quality={82}
       />
     </div>
     <div>
@@ -43,7 +47,7 @@ const structuredData = {
           目前的项目覆盖长篇创作、证据驱动研究、多模型研发流水线和 RAG
           应用。这个网站用来展示这些项目，也记录它们背后的设计取舍与实际问题。
         </p>
-        <a class="button primary" href={site.github} target="_blank" rel="noreferrer"
+        <a class="button primary" href={site.githubCta} target="_blank" rel="noreferrer"
           >在 GitHub 上找到我 ↗</a
         >
       </div>

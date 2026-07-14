@@ -20,6 +20,8 @@ const required = [
 ];
 
 const files = [];
+const serverRoutes = new Set(['/go/github', '/go/github/ecc-init']);
+const seenServerRoutes = new Set();
 const walk = async (directory) => {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const absolute = path.join(directory, entry.name);
@@ -78,11 +80,19 @@ for (const file of htmlFiles) {
     const value = match[1];
     if (/^(?:https?:|mailto:|tel:|data:|javascript:|#|\/\/)/.test(value)) continue;
     const pathname = new URL(value, `https://www.execute42.top${route}`).pathname;
+    if (serverRoutes.has(pathname)) {
+      seenServerRoutes.add(pathname);
+      continue;
+    }
     const candidates = candidatesFor(pathname);
     if (!(await Promise.all(candidates.map(exists))).some(Boolean)) {
       failures.push(`${relative}: broken internal reference ${value}`);
     }
   }
+}
+
+for (const route of serverRoutes) {
+  if (!seenServerRoutes.has(route)) failures.push(`missing tracked server route ${route}`);
 }
 
 if (failures.length > 0) {

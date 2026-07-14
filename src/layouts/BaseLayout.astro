@@ -3,6 +3,8 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import { site } from '@/config/site';
 import '@/styles/global.css';
+import { getImage } from 'astro:assets';
+import identityImage from '../../public/images/identity-42.png';
 
 interface Props {
   title?: string;
@@ -24,6 +26,7 @@ const {
 const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url);
 const socialImage = image ? new URL(image, site.url) : undefined;
+const favicon = await getImage({ src: identityImage, width: 64, height: 64, format: 'webp' });
 ---
 
 <!doctype html>
@@ -34,7 +37,7 @@ const socialImage = image ? new URL(image, site.url) : undefined;
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#f5f3ed" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#11130f" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" href="/images/identity-42.png" />
+    <link rel="icon" type="image/webp" href={favicon.src} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

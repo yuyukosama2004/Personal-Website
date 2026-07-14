@@ -10,9 +10,11 @@ server never installs Node dependencies or builds application code.
 /var/www/personal-website/
 ├── bin/
 │   ├── deploy-release
-│   └── rollback-release
+│   ├── rollback-release
+│   └── monthly-traffic-report
 ├── incoming/
 ├── releases/<commit-sha>/
+├── reports/<yyyy-mm>.md
 ├── current -> releases/<commit-sha>
 └── deployments.log
 ```
@@ -41,3 +43,9 @@ The deploy script validates the archive, switches the symlink, and requests `/`,
 `www.execute42.top` must resolve to `8.153.98.251`. The independent Nginx vhost reuses the existing
 certificate only while it remains valid and includes the `www.execute42.top` SAN. Once DNS resolves,
 replace it with an automatically renewed certificate and verify the renewal timer before launch.
+
+## Anonymous traffic reports
+
+Nginx records a minimal analytics log without IP, Cookie or User-Agent fields. A monthly cron job
+generates aggregate page-view, 404 and fixed GitHub CTA counts under `reports/`. See
+[`ANALYTICS.md`](./ANALYTICS.md) for the log format, retention and manual report command.
