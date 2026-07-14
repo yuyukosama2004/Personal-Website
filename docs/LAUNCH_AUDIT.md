@@ -39,6 +39,12 @@ scored Performance 68 / Accessibility 100 / Best Practices 81 / SEO 100 and expl
 the same Kaspersky resources. The optimized isolated comparison raised Performance to 97 and cut
 LCP from 7.7 s to 2.1 s.
 
+After deployment, a second HTTPS origin run scored Performance 84 / Accessibility 100 / Best
+Practices 81 / SEO 100 with LCP 3.5 s, CLS 0 and TBT 40 ms. Its request ledger attributes 22,516
+transferred bytes to the site and 375,172 bytes to the injected Kaspersky stylesheet and script. The
+deployed favicon itself is 728 bytes. This confirms the remaining score gap is dominated by the
+measurement host rather than the deployed bundle.
+
 INP is not produced by a one-load lab run. The site ships no application runtime on the homepage,
 and the measured TBT is 0 ms; real-user INP can only be evaluated after sufficient public traffic.
 
@@ -57,7 +63,8 @@ public DNS is pending:
 
 The real GitHub Actions deploy workflow and rollback input were exercised before this audit. The
 active symlink moved from the current release to the previous release and back without changing the
-other virtual hosts.
+other virtual hosts. The audited candidate was then deployed automatically at commit
+`53c39856e4ae2b9ef02bc1a2406f83b95b42b6d3`; the active symlink and deployment ledger both match.
 
 ## Security and privacy
 
@@ -78,7 +85,9 @@ other virtual hosts.
 ## Remaining launch gates
 
 1. Publish the `www` A record to `8.153.98.251` in the authoritative Alibaba Cloud DNS zone.
+   Alibaba Cloud's authoritative `dns29.hichina.com` server still returned NXDOMAIN at the end of
+   this audit.
 2. Replace the currently valid shared certificate with an ACME-managed certificate and prove renewal
    with a dry run after DNS resolves.
 3. Confirm the required mainland-China ICP/compliance status before treating the hostname as public.
-4. Rerun the production-origin Lighthouse and public smoke suite after DNS and the final deployment.
+4. Rerun the resolver-independent public smoke suite after DNS and the final deployment.
