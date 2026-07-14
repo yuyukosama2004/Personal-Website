@@ -15,6 +15,7 @@ corepack pnpm dev
 
 ```bash
 corepack pnpm verify
+corepack pnpm test:e2e
 ```
 
 构建会依次生成 Astro 静态页面与 Pagefind 全文索引。博客文章放在
@@ -33,5 +34,8 @@ Collections schema 在构建时校验。
 - [完整开发计划](./DEVELOPMENT_PLAN.md)
 - [GitHub Issues](https://github.com/yuyukosama2004/Personal-Website/issues)
 - [生产部署与回滚](./docs/DEPLOYMENT.md)
+- [上线审计](./docs/LAUNCH_AUDIT.md)
+- [隐私友好的流量统计](./docs/ANALYTICS.md)
+- [发布后产品决策](./docs/PRODUCT_DECISIONS.md)
 - 代码通过分支、Pull Request 和 GitHub Actions 管理。
 - `main` 始终保持可构建，并由部署工作流原子发布到生产服务器。

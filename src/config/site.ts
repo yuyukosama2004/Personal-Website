@@ -6,6 +6,7 @@ export const site = {
   url: 'https://www.execute42.top',
   author: 'yuyukosama2004',
   github: 'https://github.com/yuyukosama2004',
+  githubCta: '/go/github',
   locale: 'zh_CN',
   language: 'zh-CN',
 } as const;
