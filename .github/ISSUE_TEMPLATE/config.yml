@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Development plan
+    url: https://github.com/yuyukosama2004/Personal-Website/blob/main/DEVELOPMENT_PLAN.md
+    about: Review scope, milestones, and release criteria before opening an issue.
