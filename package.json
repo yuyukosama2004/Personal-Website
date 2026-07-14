@@ -1,6 +1,6 @@
 {
   "name": "personal-website",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.13.0",
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && node scripts/check-built-site.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",

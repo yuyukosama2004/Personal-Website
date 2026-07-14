@@ -32,5 +32,6 @@ Collections schema 在构建时校验。
 
 - [完整开发计划](./DEVELOPMENT_PLAN.md)
 - [GitHub Issues](https://github.com/yuyukosama2004/Personal-Website/issues)
+- [生产部署与回滚](./docs/DEPLOYMENT.md)
 - 代码通过分支、Pull Request 和 GitHub Actions 管理。
-- `main` 保持可构建，并由后续部署工作流发布到生产服务器。
+- `main` 始终保持可构建，并由部署工作流原子发布到生产服务器。
