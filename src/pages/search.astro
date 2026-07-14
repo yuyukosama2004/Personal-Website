@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="搜索" description="搜索 execute42 的项目案例与技术文章。">
+  <section class="site-shell page-intro" data-pagefind-ignore>
+    <p class="eyebrow">SEARCH</p>
+    <h1 class="display-title">搜索</h1>
+    <p class="lede">输入项目、技术或问题关键词，结果全部在浏览器本地检索。</p>
+  </section>
+  <section class="site-shell search-section" data-pagefind-ignore>
+    <div id="search"></div>
+    <noscript>请启用 JavaScript 使用站内搜索。</noscript>
+  </section>
+
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', () => {
+      const PagefindUI = window.PagefindUI;
+      if (!PagefindUI) return;
+      new PagefindUI({ element: '#search', showSubResults: true, showImages: false });
+    });
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .page-intro {
+    padding-block: 8rem 3rem;
+  }
+  .search-section {
+    min-height: 30rem;
+    padding-bottom: 6rem;
+  }
+  #search {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--accent-strong);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--surface-strong);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-tag: var(--accent-soft);
+    max-width: 50rem;
+  }
+  #search .pagefind-ui__search-input {
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+  }
+  #search .pagefind-ui__result-link {
+    color: var(--text);
+  }
+  #search .pagefind-ui__result-excerpt {
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+interface Props {
+  items: string[];
+  accent: string;
+}
+
+const { items, accent } = Astro.props;
+---
+
+<section
+  class="system-map panel"
+  style={`--map-accent:${accent}`}
+  aria-labelledby="system-map-title"
+>
+  <div class="map-heading">
+    <p class="eyebrow">SYSTEM MAP</p>
+    <h2 id="system-map-title">关键流程</h2>
+  </div>
+  <ol style={`--steps:${items.length}`}>
+    {
+      items.map((item, index) => (
+        <li>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <strong>{item}</strong>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .system-map {
+    overflow: hidden;
+    margin-bottom: 4rem;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--map-accent) 9%, var(--surface));
+  }
+  .map-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: -0.04em;
+  }
+  ol {
+    display: grid;
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    display: flex;
+    min-height: 8rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--map-accent) 35%, var(--line));
+    background: var(--surface);
+  }
+  li:not(:last-child)::after {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: -0.55rem;
+    width: 1rem;
+    height: 1rem;
+    border-top: 1px solid var(--map-accent);
+    border-right: 1px solid var(--map-accent);
+    background: var(--surface);
+    content: '';
+    transform: translateY(-50%) rotate(45deg);
+  }
+  li span {
+    color: var(--map-accent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+  li strong {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 42rem) {
+    ol {
+      grid-template-columns: 1fr;
+    }
+    li {
+      min-height: 5rem;
+    }
+    li:not(:last-child)::after {
+      top: auto;
+      right: 50%;
+      bottom: -0.55rem;
+      transform: translateX(50%) rotate(135deg);
+    }
+  }
+</style>

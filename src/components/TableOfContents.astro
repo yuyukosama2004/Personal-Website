@@ -1,0 +1,80 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const visibleHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{
+  visibleHeadings.length > 0 && (
+    <nav class="toc" aria-label="文章目录">
+      <p>目录</p>
+      <ol>
+        {visibleHeadings.map((heading) => (
+          <li data-depth={heading.depth}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    position: sticky;
+    top: 6.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .toc p {
+    margin: 0 0 0.7rem;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0.45rem 0;
+  }
+
+  li[data-depth='3'] {
+    padding-left: 0.9rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent-strong);
+  }
+
+  @media (max-width: 66rem) {
+    .toc {
+      position: static;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+  }
+</style>
