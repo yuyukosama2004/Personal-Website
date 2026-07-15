@@ -2,7 +2,7 @@
 
 [`www.execute42.top`](https://www.execute42.top) 的个人网站与 Markdown 博客项目。
 
-网站用于展示可控、可验证、local-first 的 AI 应用与 Agent 开发工具，并把博客、项目案例和 GitHub 仓库连接成一条持续的内容与访问路径。
+网站用于展示全栈 AI 应用与 Agent 工程案例，重点记录模型能力如何被约束、验证、审计和安全恢复，并把技术笔记、项目案例和 GitHub 仓库连接成持续的内容与访问路径。
 
 ## Development
 
@@ -25,6 +25,7 @@ Collections schema 在构建时校验。
 ## Content routes
 
 - `/projects/`：项目列表与详情
+- `/projects/phonemall/`：PhoneMall canonical 案例页；旧路径由 Nginx 301 跳转
 - `/blog/`：Markdown 博客、标签和相关文章
 - `/search/`：浏览器本地全文搜索
 - `/rss.xml`：文章订阅
@@ -37,5 +38,6 @@ Collections schema 在构建时校验。
 - [上线审计](./docs/LAUNCH_AUDIT.md)
 - [隐私友好的流量统计](./docs/ANALYTICS.md)
 - [发布后产品决策](./docs/PRODUCT_DECISIONS.md)
+- [作品集与 GitHub 展示改造决策](./docs/PORTFOLIO_REDESIGN.md)
 - 代码通过分支、Pull Request 和 GitHub Actions 管理。
 - `main` 始终保持可构建，并由部署工作流原子发布到生产服务器。

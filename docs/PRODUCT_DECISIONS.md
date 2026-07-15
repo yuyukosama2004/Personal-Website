@@ -1,5 +1,11 @@
 # Product decisions after launch
 
+## Portfolio positioning: evidence-gated full-stack AI
+
+The site now positions the owner as a full-stack AI application and agent tooling developer. Project prominence follows public evidence rather than repository size alone: ecc-init remains first while PhoneMall lacks its sanitized media package. PhoneMall can move to first only after the gate recorded in `PORTFOLIO_REDESIGN.md` passes.
+
+Repository visibility, maturity, activity, demo availability and evidence level are separate facts. A public repository without a chosen open-source license must not be labelled Open Source.
+
 ## Comments: defer
 
 Comments are not part of the first public release. The current two articles are technical case

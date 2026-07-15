@@ -2,14 +2,19 @@
 name: GroundedSeek
 tagline: 让每个研究结论都能回到证据
 summary: 本地优先的 Web Research 服务与 MCP 工作台，把搜索、浏览、证据整理、版本记录和导出组织成可追溯的研究流程。
-status: active
 category: research
-featured: true
+tier: featured
 order: 2
 sourceVisibility: private
+maturity: alpha
+activity: active
+demoStatus: unavailable
+evidence: partial
+license: null
 githubUrl: null
 demoUrl: null
 tech: [FastAPI, MCP, Playwright, SQLite]
+evidenceStats: []
 flow: [研究问题, 搜索与浏览, 证据单元, 冲突综合, 版本化报告]
 relatedPosts: [building-evidence-backed-research-mcp]
 accent: '#386d63'

@@ -1,8 +1,8 @@
 # Hi, I'm yuyukosama2004 👋
 
-I build controllable, auditable and local-first AI tools.
+I build full-stack AI products and agent tooling with clear control boundaries, verifiable outputs, and safe recovery paths.
 
-我关注 AI 应用、Agent 开发工作流与全栈工程，更在意模型输出如何被约束、验证和安全地交给人。
+我是一名全栈 AI 应用与 Agent 工程开发者。项目覆盖 Java 微服务、Vue 前端、Python CLI、RAG、MCP 与自托管部署；我尤其关注模型能力如何被约束、验证、审计，并安全地交给人。
 
 - 🌐 [Personal website](https://www.execute42.top)
 - 🧭 [Projects and case studies](https://www.execute42.top/projects/)
@@ -10,9 +10,35 @@ I build controllable, auditable and local-first AI tools.
 
 ## Featured work
 
-- [ecc-init](https://github.com/yuyukosama2004/ecc-init) — a lightweight, auditable Claude Code configuration initializer.
-- [NovelFlow](https://www.execute42.top/projects/novelflow/) — a local-first workspace for long-form AI writing with human control.
-- [GroundedSeek](https://www.execute42.top/projects/grounded-seek/) — evidence-backed research where conclusions remain traceable to sources.
-- [Guarded Agent Pipeline](https://www.execute42.top/projects/guarded-agent-pipeline/) — a guarded multi-model development workflow with explicit review gates.
+### [ecc-init](https://github.com/yuyukosama2004/ecc-init)
 
-The website is the public case-study layer for work that is still private or under active development. Public repositories link back to the corresponding architecture notes and project pages.
+An auditable Claude Code configuration initializer with declarative project packs, safe merges, operation receipts, and rollback.
+
+`Python` `Claude Code` `CLI` `Safe merges` `Rollback`
+
+[Source](https://github.com/yuyukosama2004/ecc-init) · [Case study](https://www.execute42.top/projects/ecc-init/)
+
+### GroundedSeek
+
+An evidence-backed research workspace where claims remain traceable to sources, snapshots, and conflicting evidence.
+
+`FastAPI` `MCP` `Playwright` `SQLite` `Research`
+
+[Case study](https://www.execute42.top/projects/grounded-seek/)
+
+### PhoneMall — RAG Shopping Assistant Platform
+
+A self-hosted Spring Cloud and Vue 3 commerce platform with transactional inventory, merchant operations, and a RAG-powered shopping assistant.
+
+`Java` `Spring Cloud` `Vue 3` `RAG` `Docker`
+
+[Case study](https://www.execute42.top/projects/phonemall/)
+
+## What I care about
+
+- Full-stack product delivery, from domain models and UI to deployment and recovery
+- RAG and MCP systems grounded in real data and explicit source boundaries
+- Human-in-the-loop workflows for model-driven decisions
+- Tests, audit trails, backups, rollback, and operational safety
+
+Some projects are maintained in private repositories while they are under active development. Their public case studies clearly identify what is implemented, what is demonstrated, and what remains experimental.

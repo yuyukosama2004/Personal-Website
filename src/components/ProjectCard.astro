@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { projectStatusLabel } from '@/utils/projects';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -7,14 +8,26 @@ interface Props {
 }
 
 const { project, index = 0 } = Astro.props;
-const { name, tagline, status, category, tech, accent } = project.data;
+const { name, tagline, category, tech, accent, evidence, evidenceStats } = project.data;
+const categoryLabels = {
+  product: 'Local-first product',
+  research: 'Research tooling',
+  engineering: 'Developer tooling',
+  application: 'Full-stack application',
+  lab: 'Personal lab',
+};
+const evidenceLabels = {
+  verified: '证据已核验',
+  partial: '案例整理中',
+  planned: '实验记录',
+};
 ---
 
 <article class="project-card panel" style={`--project-accent: ${accent}`}>
   <a href={`/projects/${project.id}/`}>
     <div class="card-top">
-      <span>{String(index + 1).padStart(2, '0')} / {category}</span>
-      <span class="status">{status}</span>
+      <span>{String(index + 1).padStart(2, '0')} / {categoryLabels[category]}</span>
+      <span class="status">{projectStatusLabel(project.data)}</span>
     </div>
     <div class="project-mark" aria-hidden="true">{name.slice(0, 2).toUpperCase()}</div>
     <div>
@@ -23,6 +36,22 @@ const { name, tagline, status, category, tech, accent } = project.data;
       <ul aria-label="技术栈">
         {tech.slice(0, 4).map((item) => <li>{item}</li>)}
       </ul>
+      {
+        evidenceStats.length > 0 && (
+          <dl class="evidence-stats" aria-label="验证数据">
+            {evidenceStats.map((stat) => (
+              <div title={`统计于 ${stat.measuredAt.toISOString().slice(0, 10)}`}>
+                <dt>{stat.value}</dt>
+                <dd>{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+      <footer>
+        <span>{evidenceLabels[evidence]}</span>
+        <strong>查看案例 →</strong>
+      </footer>
     </div>
   </a>
 </article>
@@ -98,6 +127,45 @@ const { name, tagline, status, category, tech, accent } = project.data;
     padding: 0;
     gap: 0.45rem;
     list-style: none;
+  }
+
+  .evidence-stats {
+    display: flex;
+    margin: 1.25rem 0 0;
+    gap: 1.5rem;
+  }
+
+  .evidence-stats div {
+    display: grid;
+    gap: 0.05rem;
+  }
+
+  .evidence-stats dt {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  .evidence-stats dd {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  footer strong {
+    color: var(--project-accent);
   }
 
   li {

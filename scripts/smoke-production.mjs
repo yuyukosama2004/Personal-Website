@@ -28,6 +28,7 @@ const routes = [
   '/',
   '/projects/',
   '/projects/ecc-init/',
+  '/projects/phonemall/',
   '/blog/',
   '/blog/building-evidence-backed-research-mcp/',
   '/search/',
@@ -82,5 +83,18 @@ for (const [path, expected] of [
   assert(response.status === 302, `${path} returned ${response.status}`);
   assert(response.headers.get('location') === expected, `${path} redirected to an unexpected URL`);
 }
+
+const legacyPhoneMall = await fetch(`${origin}/projects/phonemall-ai/`, {
+  redirect: 'manual',
+});
+assert(
+  legacyPhoneMall.status === 301,
+  `/projects/phonemall-ai/ returned ${legacyPhoneMall.status}`,
+);
+assert(
+  legacyPhoneMall.headers.get('location') === 'https://www.execute42.top/projects/phonemall/',
+  'Legacy PhoneMall URL did not redirect to the canonical case study',
+);
+console.log('301 /projects/phonemall-ai/');
 
 console.log(`Public production smoke passed for ${origin}; favicon ${faviconBytes} bytes.`);

@@ -2,14 +2,19 @@
 name: Guarded Agent Pipeline
 tagline: 可验证、可审计的多模型研发流水线
 summary: 将 Codex、Claude Code 与 DeepSeek 组织成带确定性验证和人工推送边界的研发流程，避免把模型共识误当作工程正确性。
-status: experimental
 category: engineering
-featured: true
-order: 3
+tier: lab
+order: 5
 sourceVisibility: private
+maturity: experimental
+activity: active
+demoStatus: unavailable
+evidence: partial
+license: null
 githubUrl: null
 demoUrl: null
 tech: [TypeScript, MCP, PowerShell, Git]
+evidenceStats: []
 flow: [任务约束, 模型实现, 独立复核, 确定性验证, 人工批准]
 relatedPosts: []
 accent: '#805d48'

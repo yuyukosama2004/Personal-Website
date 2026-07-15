@@ -2,14 +2,25 @@
 name: ecc-init
 tagline: 为 Claude Code 项目快速建立可回滚配置
 summary: 轻量级 Claude Code 配置初始化器，识别项目技术栈，按 GSD-first 思路安装技能，并通过备份、合并和回滚保护已有配置。
-status: active
 category: engineering
-featured: false
-order: 5
+tier: featured
+order: 1
 sourceVisibility: public
+maturity: alpha
+activity: active
+demoStatus: unavailable
+evidence: verified
+license: null
 githubUrl: https://github.com/yuyukosama2004/ecc-init
 demoUrl: null
-tech: [Claude Code, Shell, Configuration]
+tech: [Python, Claude Code, CLI, Rollback]
+evidenceStats:
+  - value: '149'
+    label: tests passed
+    measuredAt: 2026-07-15
+  - value: '3'
+    label: OS CI matrix
+    measuredAt: 2026-07-15
 flow: [扫描项目, 识别技术栈, 备份配置, 增量合并, 可选回滚]
 relatedPosts: []
 accent: '#4d6f8d'
