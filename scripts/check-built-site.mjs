@@ -10,6 +10,7 @@ const required = [
   'about/index.html',
   'blog/index.html',
   'projects/index.html',
+  'projects/phonemall/index.html',
   'search/index.html',
   'rss.xml',
   'robots.txt',

@@ -1,8 +1,8 @@
 export const site = {
   name: 'execute42',
-  title: 'execute42 — 可控、可验证的 AI 工具与开发实践',
+  title: 'execute42 · 全栈 AI 应用与 Agent 工程',
   description:
-    '构建可控、可验证、local-first 的 AI 应用与 Agent 开发工具，记录项目、架构和真实开发实践。',
+    'yuyukosama2004 的个人作品集：Java 与 Vue 全栈产品、RAG、MCP、Claude Code 工具，以及强调验证、审计和回滚的 AI 工程实践。',
   url: 'https://www.execute42.top',
   author: 'yuyukosama2004',
   github: 'https://github.com/yuyukosama2004',

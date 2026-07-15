@@ -1,7 +1,14 @@
 import { expect, test } from '@playwright/test';
 
 test('core routes render with their primary heading', async ({ page }) => {
-  for (const route of ['/', '/projects/', '/projects/ecc-init/', '/blog/', '/about/']) {
+  for (const route of [
+    '/',
+    '/projects/',
+    '/projects/ecc-init/',
+    '/projects/phonemall/',
+    '/blog/',
+    '/about/',
+  ]) {
     const response = await page.goto(route);
     expect(response?.status(), route).toBe(200);
     await expect(page.locator('h1')).toBeVisible();
@@ -41,6 +48,15 @@ test('GitHub calls to action use fixed tracked routes', async ({ page }) => {
   await expect(page.locator('a[href="/go/github/ecc-init"]')).toBeVisible();
 });
 
+test('featured projects follow the evidence-gated order', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.project-grid h3')).toHaveText([
+    'ecc-init',
+    'GroundedSeek',
+    'PhoneMall',
+  ]);
+});
+
 test('mobile layout has no horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
@@ -56,8 +72,8 @@ test('core content remains available without JavaScript', async ({ browser }) =>
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('把 AI 的能力');
-  await expect(page.getByRole('link', { name: '查看项目' })).toBeVisible();
+  await expect(page.locator('h1')).toContainText('可运行、可验证、可恢复');
+  await expect(page.getByRole('link', { name: '查看精选项目' })).toBeVisible();
   await context.close();
 });
 

@@ -8,7 +8,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { byProjectOrder, byPublishedDesc } from '@/utils/content';
 
 const projects = (await getCollection('projects'))
-  .filter((project) => project.data.featured)
+  .filter((project) => project.data.tier === 'featured')
   .sort(byProjectOrder);
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort(byPublishedDesc)
@@ -20,28 +20,55 @@ const structuredData = {
     { '@type': 'Person', name: site.author, url: site.url, sameAs: [site.github] },
   ],
 };
+const capabilities = [
+  {
+    index: '01',
+    title: '全栈产品工程',
+    body: '从领域模型、API 与前端交互，到数据库迁移和自托管部署，完成可以运行和维护的产品闭环。',
+    tags: ['Java', 'Spring Cloud', 'Vue 3', 'Python', 'Docker'],
+  },
+  {
+    index: '02',
+    title: 'AI 与检索系统',
+    body: '将模型、Embedding、RAG、流式输出和证据追踪接入具体任务，而不是停留在聊天界面。',
+    tags: ['RAG', 'MCP', 'SSE', 'Vector Search'],
+  },
+  {
+    index: '03',
+    title: '可靠性与控制边界',
+    body: '通过审批、来源记录、测试门禁、备份与回滚，降低模型驱动流程的不确定性。',
+    tags: ['CI/CD', 'Audit', 'Rollback', 'Human-in-the-loop'],
+  },
+];
+const workflow = [
+  ['定义问题与边界', '明确模型可以建议什么，以及哪些状态只能由人确认。'],
+  ['建立可运行闭环', '连接业务数据、界面、API、存储与部署环境。'],
+  ['加入确定性验证', '使用测试、静态检查、来源和状态记录验证结果。'],
+  ['保留恢复路径', '为配置、数据和版本变更提供备份、回滚与审计信息。'],
+];
 ---
 
 <BaseLayout structuredData={structuredData}>
   <section class="site-shell hero">
     <div>
-      <p class="eyebrow">AI APPLICATIONS · AGENT WORKFLOWS · LOCAL-FIRST</p>
-      <h1 class="display-title">把 AI 的能力，放进可控的系统里。</h1>
+      <p class="eyebrow">FULL-STACK AI · AGENT ENGINEERING</p>
+      <h1 class="display-title">构建可运行、可验证、可恢复的 AI 产品。</h1>
       <p class="lede">
-        我是 yuyukosama2004。我在构建可控、可验证、local-first 的 AI 应用与 Agent
-        开发工具，也在这里记录真实的架构取舍与开发实践。
+        我使用 Java、Vue、Python、RAG 与 MCP
+        构建实际项目，并把测试、审计、人工边界和回滚能力放进系统设计。
       </p>
       <div class="button-row">
-        <a class="button primary" href="/projects">查看项目</a>
+        <a class="button primary" href="/projects">查看精选项目</a>
         <a class="button" href={site.githubCta} target="_blank" rel="noreferrer">访问 GitHub ↗</a>
+        <a class="text-link hero-note-link" href="/blog">阅读技术笔记 →</a>
       </div>
     </div>
     <aside class="signal-card panel" aria-label="当前关注方向">
       <span class="status"><i></i> currently building</span>
       <dl>
-        <div><dt>01</dt><dd>Human-in-the-loop AI</dd></div>
-        <div><dt>02</dt><dd>Evidence-backed research</dd></div>
-        <div><dt>03</dt><dd>Guarded agent workflows</dd></div>
+        <div><dt>01</dt><dd>Full-stack product delivery</dd></div>
+        <div><dt>02</dt><dd>Evidence-backed AI</dd></div>
+        <div><dt>03</dt><dd>Safe recovery paths</dd></div>
       </dl>
     </aside>
   </section>
@@ -49,13 +76,58 @@ const structuredData = {
   <section class="site-shell section-heading">
     <div>
       <p class="eyebrow">SELECTED WORK</p><h2 class="section-title">
-        项目不只是代码仓库，而是问题、边界与结果。
+        用问题、约束与证据说明项目。
       </h2>
     </div>
     <a class="text-link" href="/projects">浏览全部项目 →</a>
   </section>
   <section class="site-shell project-grid" aria-label="精选项目">
     {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+  </section>
+
+  <section class="site-shell capability-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">CAPABILITIES</p>
+        <h2 class="section-title">从产品实现到可靠交付。</h2>
+      </div>
+    </div>
+    <div class="capability-grid">
+      {
+        capabilities.map((capability) => (
+          <article class="capability-card">
+            <span>{capability.index}</span>
+            <h3>{capability.title}</h3>
+            <p>{capability.body}</p>
+            <ul aria-label={`${capability.title}技术`}>
+              {capability.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="site-shell workflow-section">
+    <div>
+      <p class="eyebrow">WORKING METHOD</p>
+      <h2 class="section-title">从模型能力到可运行系统。</h2>
+    </div>
+    <ol>
+      {
+        workflow.map(([title, body], index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 
   <section class="site-shell notes-section">
@@ -67,6 +139,21 @@ const structuredData = {
       </div><a class="text-link" href="/blog">阅读全部文章 →</a>
     </div>
     <div>{posts.map((post) => <PostCard post={post} />)}</div>
+  </section>
+
+  <section class="site-shell closing panel">
+    <div>
+      <p class="eyebrow">ABOUT EXECUTE42</p>
+      <h2 class="section-title">让模型能力有边界，也有证据。</h2>
+      <p>
+        我正在持续完善项目的公开演示、架构记录与可复现验证。你可以从案例了解设计取舍，也可以从
+        GitHub 查看公开实现。
+      </p>
+    </div>
+    <div class="button-row">
+      <a class="button primary" href="/about">了解我的工作方式</a>
+      <a class="button" href="/projects">浏览全部项目</a>
+    </div>
   </section>
 </BaseLayout>
 
@@ -81,6 +168,10 @@ const structuredData = {
   }
   .lede {
     margin: 2rem 0;
+  }
+  .hero-note-link {
+    align-self: center;
+    margin-left: 0.25rem;
   }
   .signal-card {
     padding: 1.35rem;
@@ -144,11 +235,91 @@ const structuredData = {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
+  .capability-section,
+  .workflow-section {
+    padding-block: 8rem 2rem;
+  }
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .capability-card {
+    padding: 1.5rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .capability-card > span,
+  .workflow-section li > span {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  .capability-card h3,
+  .workflow-section h3 {
+    margin: 2rem 0 0.6rem;
+    font-size: 1.25rem;
+  }
+  .capability-card p,
+  .workflow-section p,
+  .closing p {
+    color: var(--muted);
+  }
+  .capability-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    gap: 0.4rem;
+    list-style: none;
+  }
+  .capability-card li {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+  .workflow-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+  .workflow-section ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .workflow-section li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--line);
+    gap: 1rem;
+  }
+  .workflow-section h3 {
+    margin: 0;
+  }
+  .workflow-section p {
+    margin: 0.4rem 0 0;
+  }
   .notes-section {
     padding-block: 8rem 5rem;
   }
   .notes-section > .section-heading {
     margin-bottom: 2rem;
+  }
+  .closing {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 6rem;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    gap: 3rem;
+  }
+  .closing p:not(.eyebrow) {
+    max-width: 42rem;
+    margin-bottom: 0;
   }
   @media (max-width: 52rem) {
     .hero {
@@ -161,6 +332,16 @@ const structuredData = {
     }
     .project-grid {
       grid-template-columns: 1fr;
+    }
+    .capability-grid {
+      grid-template-columns: 1fr;
+    }
+    .workflow-section {
+      grid-template-columns: 1fr;
+    }
+    .closing {
+      align-items: start;
+      flex-direction: column;
     }
   }
   @media (max-width: 36rem) {

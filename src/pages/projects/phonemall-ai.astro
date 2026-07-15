@@ -1,0 +1,24 @@
+---
+import { site } from '@/config/site';
+
+const target = `${site.url}/projects/phonemall/`;
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>PhoneMall 案例已迁移 · {site.name}</title>
+    <meta name="description" content="PhoneMall 项目案例已迁移到新的规范地址。" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <main>
+      <h1>PhoneMall 案例已迁移</h1>
+      <p><a href={target}>前往新的案例页面</a></p>
+    </main>
+  </body>
+</html>

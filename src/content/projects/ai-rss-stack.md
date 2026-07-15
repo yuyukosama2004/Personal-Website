@@ -2,14 +2,19 @@
 name: AI RSS Stack
 tagline: 把分散更新收回自己的订阅系统
 summary: 组合 FreshRSS、RSSHub、changedetection.io 与 GitHub Release feeds 的本地订阅栈，用统一入口追踪项目发布和网页变化。
-status: experimental
 category: lab
-featured: false
+tier: lab
 order: 6
 sourceVisibility: private
+maturity: experimental
+activity: maintained
+demoStatus: unavailable
+evidence: planned
+license: null
 githubUrl: null
 demoUrl: null
 tech: [FreshRSS, RSSHub, Docker, changedetection.io]
+evidenceStats: []
 flow: [选择来源, 生成或监测 Feed, 聚合去重, 自主阅读]
 relatedPosts: []
 accent: '#a16c37'

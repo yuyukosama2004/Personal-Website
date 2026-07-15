@@ -2,14 +2,19 @@
 name: NovelFlow
 tagline: 把 AI 长篇创作变成由作者掌舵的本地工作台
 summary: 面向长篇小说创作的 local-first AI 工作台，用明确的审批边界区分模型建议与故事正史，让作者始终拥有最终决定权。
-status: active
 category: product
-featured: true
-order: 1
+tier: more
+order: 4
 sourceVisibility: private
+maturity: alpha
+activity: active
+demoStatus: unavailable
+evidence: partial
+license: null
 githubUrl: null
 demoUrl: null
 tech: [FastAPI, React, TypeScript, SQLite]
+evidenceStats: []
 flow: [作者意图, 相关正史检索, AI 候选草稿, 作者审批, 正史更新]
 relatedPosts: [why-ai-writing-needs-canon-boundaries]
 accent: '#71834a'

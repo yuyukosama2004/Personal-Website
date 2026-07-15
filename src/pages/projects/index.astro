@@ -5,8 +5,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { byProjectOrder } from '@/utils/content';
 
 const projects = (await getCollection('projects')).sort(byProjectOrder);
-const featured = projects.filter((project) => project.data.featured);
-const labs = projects.filter((project) => !project.data.featured);
+const featured = projects.filter((project) => project.data.tier === 'featured');
+const more = projects.filter((project) => project.data.tier === 'more');
+const labs = projects.filter((project) => project.data.tier === 'lab');
 ---
 
 <BaseLayout title="项目" description="正在构建的 AI 应用、研究工具与 Agent 工程项目。">
@@ -20,13 +21,24 @@ const labs = projects.filter((project) => !project.data.featured);
       {featured.map((project, index) => <ProjectCard project={project} index={index} />)}
     </div>
   </section>
+  <section class="site-shell more-section">
+    <p class="eyebrow">MORE WORK</p><h2 class="section-title">更多项目</h2><div
+      class="project-grid"
+    >
+      {
+        more.map((project, index) => (
+          <ProjectCard project={project} index={featured.length + index} />
+        ))
+      }
+    </div>
+  </section>
   <section class="site-shell lab-section">
     <p class="eyebrow">LAB & PRACTICE</p><h2 class="section-title">实验与工程实践</h2><div
       class="project-grid"
     >
       {
         labs.map((project, index) => (
-          <ProjectCard project={project} index={featured.length + index} />
+          <ProjectCard project={project} index={featured.length + more.length + index} />
         ))
       }
     </div>
@@ -43,6 +55,7 @@ const labs = projects.filter((project) => !project.data.featured);
     margin-top: 2rem;
     gap: 1rem;
   }
+  .more-section,
   .lab-section {
     padding-block: 8rem 5rem;
   }
