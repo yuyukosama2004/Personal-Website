@@ -2,8 +2,8 @@
 set -euo pipefail
 
 month="${1:-$(date -d 'last month' +%Y-%m)}"
-analytics_log="${ANALYTICS_LOG:-/var/log/nginx/personal-website.analytics.log}"
-github_log="${GITHUB_LOG:-/var/log/nginx/personal-website-github.log}"
+analytics_log="${ANALYTICS_LOG:-/var/log/personal-website/analytics.log}"
+github_log="${GITHUB_LOG:-/var/log/personal-website/github.log}"
 output="${OUTPUT:-/var/www/personal-website/reports/${month}.md}"
 
 [[ "$month" =~ ^[0-9]{4}-[0-9]{2}$ ]] || { echo "Month must be YYYY-MM" >&2; exit 2; }

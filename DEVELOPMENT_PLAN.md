@@ -9,9 +9,9 @@
 | GitHub 仓库 | `yuyukosama2004/Personal-Website` |
 | 生产域名 | `https://www.execute42.top` |
 | 博客路径 | `https://www.execute42.top/blog` |
-| 当前状态 | v1.0.0-rc.1 / DNS gated |
-| 文档版本 | v1.0-rc.1 |
-| 最后更新 | 2026-07-14 |
+| 当前状态 | Production / v1.0.0 |
+| 文档版本 | v1.0.0 |
+| 最后更新 | 2026-07-15 |
 
 ---
 
@@ -959,21 +959,21 @@ Pull Request 内容审阅
 
 ### 部署与安全
 
-- [ ] `www.execute42.top` DNS 正确。
-- [ ] HTTPS 证书有效且自动续期。
+- [x] `www.execute42.top` DNS 正确。
+- [x] HTTPS 证书有效且自动续期。
 - [x] HTTP 正确跳转 HTTPS。
 - [x] GitHub Actions CI 和 Deploy 成功。
 - [x] 部署使用非 root 用户。
 - [x] 回滚已实际演练。
 - [x] Nginx 配置测试通过且未影响已有站点。
 - [x] 仓库与构建产物没有 Secret。
-- [ ] 合规状态已确认。
+- [x] 合规状态已确认。
 
 ### 发布后
 
-- [ ] GitHub Profile 添加网站链接。
+- [x] GitHub Profile 添加网站链接。
 - [x] 公开仓库 README 添加网站反向链接。
-- [ ] 完成一次真实生产 smoke test。
+- [x] 完成一次真实生产 smoke test。
 - [x] 创建首月内容发布 Backlog。
 - [x] 记录上线版本和已知限制。
 

@@ -1,8 +1,8 @@
 # Launch audit
 
-Audit date: 2026-07-14 (Asia/Shanghai)
+Audit date: 2026-07-15 (Asia/Shanghai)
 
-Status: **candidate build passed; public DNS, automated certificate renewal and compliance confirmation remain launch gates.**
+Status: **all v1.0.0 launch gates passed.**
 
 ## Automated quality gates
 
@@ -48,46 +48,54 @@ measurement host rather than the deployed bundle.
 INP is not produced by a one-load lab run. The site ships no application runtime on the homepage,
 and the measured TBT is 0 ms; real-user INP can only be evaluated after sufficient public traffic.
 
-## Production-origin smoke test
+## Public production smoke test
 
-The origin was tested with `www.execute42.top` resolved directly to localhost on the server while
-public DNS is pending:
+Alibaba Cloud's authoritative DNS and a public recursive resolver return `8.153.98.251` for
+`www.execute42.top`. GitHub Actions run `29381556893` deployed commit
+`5bf74a0e5d39b657f993a098641bc78190e8e248` and then ran the public smoke suite from an independent
+GitHub-hosted runner:
 
-- `/`, `/projects/`, `/blog/`, `/search/`, `/about/`, `/rss.xml` and `/sitemap-index.xml`: HTTP 200.
+- `/`, project pages, blog pages, search, About, RSS, Sitemap and robots.txt: HTTP 200.
 - Unknown path: HTTP 404 with the custom page.
 - `/go/github` and `/go/github/ecc-init`: fixed HTTP 302 redirects to their allowlisted GitHub URLs.
 - HTTP virtual host: redirects to HTTPS.
+- HTTPS certificate validation and required security headers: pass.
+- Optimized WebP favicon: HTTP 200, correct content type and 728 bytes.
 - Nginx configuration test and reload: pass.
 - Existing `execute42.top` and `mall.execute42.top` services remained HTTP 200 after the new virtual
   host was installed.
 
-The real GitHub Actions deploy workflow and rollback input were exercised before this audit. The
-active symlink moved from the current release to the previous release and back without changing the
-other virtual hosts. The audited candidate was then deployed automatically at commit
-`53c39856e4ae2b9ef02bc1a2406f83b95b42b6d3`; the active symlink and deployment ledger both match.
+The legacy root-domain upstream at `127.0.0.1:6081` later became unavailable before the DNS and ACME
+work on 2026-07-15. No matching service or container definition was present on the host, so it was
+not restarted speculatively. This is independent of the `www` virtual host and deployment.
+
+The real GitHub Actions deploy workflow and rollback input were exercised before launch. The active
+symlink moved from the current release to the previous release and back without changing the other
+virtual hosts. The final deployment, active symlink and deployment ledger match the merged commit.
 
 ## Security and privacy
 
-- TLS certificate SAN includes `execute42.top` and `www.execute42.top`; certificate validity at audit
-  time is 2026-05-12 through 2026-08-09.
+- `www.execute42.top` uses its own Let's Encrypt certificate, valid from 2026-07-15 through
+  2026-10-13. `certbot.timer` is enabled and active, and the renewal dry run succeeded.
+- The Certbot deploy hook runs `nginx -t` and reloads Nginx after successful renewal.
 - TLS protocols are restricted to 1.2 and 1.3.
-- Responses include CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and a restrictive
-  `Permissions-Policy`.
+- Responses include HSTS, CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and a
+  restrictive `Permissions-Policy`.
 - Deploy SSH uses a dedicated `webdeploy` account without sudo or write access to Nginx configuration.
 - Releases are uploaded to an incoming directory, verified, atomically switched and retained for
   rollback.
 - Analytics logs omit IP address, Cookie and User-Agent. GitHub redirects accept no caller-provided
   destination. Raw logs rotate after approximately 90 days.
+- The dedicated analytics rotation rule passes a full system `logrotate` run, and the monthly report
+  succeeds while preserving the pre-launch records.
 - The repository contains Dependabot configuration and no frontend secret or private GitHub token.
 - `pnpm audit --prod` reports no known vulnerabilities; a tracked-file private-key/token pattern scan
   reports no matches.
 
-## Remaining launch gates
+## Completed launch gates
 
-1. Publish the `www` A record to `8.153.98.251` in the authoritative Alibaba Cloud DNS zone.
-   Alibaba Cloud's authoritative `dns29.hichina.com` server still returned NXDOMAIN at the end of
-   this audit.
-2. Replace the currently valid shared certificate with an ACME-managed certificate and prove renewal
-   with a dry run after DNS resolves.
-3. Confirm the required mainland-China ICP/compliance status before treating the hostname as public.
-4. Rerun the resolver-independent public smoke suite after DNS and the final deployment.
+1. Authoritative DNS publishes `www.execute42.top A 8.153.98.251` with a 600-second TTL.
+2. A dedicated ACME certificate is active; timer, dry run and Nginx reload hook are verified.
+3. The site owner confirmed the mainland-China ICP filing status on 2026-07-15.
+4. GitHub Profile Website points to `https://www.execute42.top`.
+5. Resolver-independent GitHub Actions public smoke passes after production deployment.
