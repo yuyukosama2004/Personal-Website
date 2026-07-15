@@ -11,6 +11,7 @@
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist && node scripts/check-built-site.mjs",
     "preview": "astro preview",
+    "smoke:production": "node scripts/smoke-production.mjs",
     "check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
