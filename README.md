@@ -1,8 +1,8 @@
 # Personal Website
 
-[`www.execute42.top`](https://www.execute42.top) 的个人网站与 Markdown 博客项目。
+[`www.execute42.top`](https://www.execute42.top) 的中英双语个人网站与 Markdown 博客项目。中文使用根路径，英文页面统一位于 `/en/`。
 
-网站用于展示全栈 AI 应用与 Agent 工程案例，重点记录模型能力如何被约束、验证、审计和安全恢复，并把技术笔记、项目案例和 GitHub 仓库连接成持续的内容与访问路径。
+网站用于展示全栈 AI 应用和开发者工具，记录项目解决的问题、技术取舍、验证情况与后续计划，并把开发笔记、项目案例和 GitHub 仓库连接起来。
 
 ## Development
 

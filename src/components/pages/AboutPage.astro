@@ -1,0 +1,122 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { site } from '@/config/site';
+import type { Locale } from '@/i18n';
+import { Image } from 'astro:assets';
+import identityImage from '../../../public/images/identity-42.png';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = {
+  zh: {
+    title: '关于我',
+    description: '关于 yuyukosama2004、execute42，以及我正在做的全栈 AI 项目。',
+    eyebrow: '关于我',
+    heading: '我喜欢把 AI 接进真正有业务流程的产品。',
+    imageAlt: 'execute42 的 42 标记',
+    paragraphs: [
+      '我是 yuyukosama2004，主要做全栈 AI 应用和开发者工具。常用技术包括 Java、Vue、Python、RAG、MCP 和自托管部署。',
+      '我不太满足于“模型已经能回答了”。数据从哪里来、结果怎么核对、哪些操作需要人确认，以及上线后怎样排查和回滚，这些同样属于产品的一部分。',
+      '目前的项目包括 RAG 智能导购商城、Claude Code 配置初始化工具、研究资料工作台、AI 长篇写作工具，以及多模型协作开发流水线。',
+    ],
+    cta: '去 GitHub 看公开项目',
+  },
+  en: {
+    title: 'About',
+    description: 'About yuyukosama2004, execute42, and the full-stack AI products I am building.',
+    eyebrow: 'ABOUT',
+    heading: 'I like building AI into products with real workflows.',
+    imageAlt: 'The execute42 identity mark',
+    paragraphs: [
+      'I am yuyukosama2004, a full-stack developer focused on AI products and developer tools. I work mainly with Java, Vue, Python, RAG, MCP, and self-hosted infrastructure.',
+      'A model producing an answer is only the beginning. I also care about where the data comes from, how results are checked, which actions require human approval, and how a deployed system can be debugged or rolled back.',
+      'My current projects include a RAG shopping assistant, a Claude Code configuration initializer, a research workspace, a long-form AI writing tool, and a guarded multi-model development pipeline.',
+    ],
+    cta: 'View my public work on GitHub',
+  },
+}[locale];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.author,
+  url: site.url,
+  sameAs: [site.github],
+  knowsAbout: [
+    'AI applications',
+    'Agent workflows',
+    'local-first software',
+    'full-stack engineering',
+  ],
+};
+---
+
+<BaseLayout title={copy.title} description={copy.description} {structuredData} {locale}>
+  <section class="site-shell about">
+    <div class="identity">
+      <Image
+        src={identityImage}
+        alt={copy.imageAlt}
+        width={768}
+        height={768}
+        format="webp"
+        quality={82}
+      />
+    </div>
+    <div>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 class="section-title">{copy.heading}</h1>
+      <div class="prose">
+        {copy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <a class="button primary" href={site.githubCta} target="_blank" rel="noreferrer"
+          >{copy.cta} ↗</a
+        >
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1fr);
+    align-items: center;
+    padding-block: 8rem 4rem;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .about h1 {
+    max-width: 16ch;
+  }
+
+  .prose {
+    max-width: 40rem;
+    margin-top: 3rem;
+    color: var(--muted);
+    font-size: 1.08rem;
+  }
+
+  .prose p {
+    margin: 0 0 1.4rem;
+  }
+
+  .identity img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  @media (max-width: 42rem) {
+    .about {
+      grid-template-columns: 1fr;
+      padding-top: 5rem;
+    }
+    .identity {
+      max-width: 12rem;
+    }
+  }
+</style>

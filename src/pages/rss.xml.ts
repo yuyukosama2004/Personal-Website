@@ -7,7 +7,7 @@ export async function GET(context: { site: URL }) {
   const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(byPublishedDesc);
   return rss({
     title: `${site.name} · 开发笔记`,
-    description: site.description,
+    description: site.locales.zh.description,
     site: context.site,
     items: posts.map((post) => ({
       title: post.data.title,
@@ -16,6 +16,6 @@ export async function GET(context: { site: URL }) {
       link: `/blog/${post.id}/`,
       categories: post.data.tags,
     })),
-    customData: `<language>${site.language}</language>`,
+    customData: '<language>zh-CN</language>',
   });
 }

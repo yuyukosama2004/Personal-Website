@@ -1,0 +1,20 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ProjectDetailPage from '@/components/pages/ProjectDetailPage.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projectsEn');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projectsEn'>;
+}
+const { project } = Astro.props;
+const { Content } = await render(project);
+const posts = (await getCollection('blogEn', ({ data }) => !data.draft)).filter(
+  (post) => post.data.project === project.id,
+);
+---
+
+<ProjectDetailPage {project} {posts} locale="en"><Content /></ProjectDetailPage>

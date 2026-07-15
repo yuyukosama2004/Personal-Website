@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 
 import TableOfContents from '@/components/TableOfContents.astro';
 import { site } from '@/config/site';
+import { localeMeta, localizePath, type Locale } from '@/i18n';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { formatDate } from '@/utils/content';
 import { getReadingTime } from '@/utils/reading-time';
@@ -14,15 +15,42 @@ interface Heading {
 }
 
 interface Props {
-  post: CollectionEntry<'blog'>;
+  post: CollectionEntry<'blog'> | CollectionEntry<'blogEn'>;
   headings: Heading[];
-  previous?: CollectionEntry<'blog'>;
-  next?: CollectionEntry<'blog'>;
+  previous?: CollectionEntry<'blog'> | CollectionEntry<'blogEn'>;
+  next?: CollectionEntry<'blog'> | CollectionEntry<'blogEn'>;
+  locale?: Locale;
 }
 
-const { post, headings, previous, next } = Astro.props;
+const { post, headings, previous, next, locale = 'zh' } = Astro.props;
 const minutes = getReadingTime(post.body ?? '');
-const canonical = `${site.url}/blog/${post.id}/`;
+const canonical = `${site.url}${localizePath(`/blog/${post.id}/`, locale)}`;
+const text =
+  locale === 'zh'
+    ? {
+        readingTime: `约 ${minutes} 分钟`,
+        tags: '文章标签',
+        writtenBy: '作者',
+        navigation: '上一篇和下一篇文章',
+        previous: '上一篇',
+        next: '下一篇',
+        copy: '复制',
+        copied: '已复制',
+        copyFailed: '复制失败',
+        copyLabel: '复制代码',
+      }
+    : {
+        readingTime: `${minutes} min read`,
+        tags: 'Article tags',
+        writtenBy: 'Written by',
+        navigation: 'Previous and next articles',
+        previous: 'Previous',
+        next: 'Next',
+        copy: 'Copy',
+        copied: 'Copied',
+        copyFailed: 'Copy failed',
+        copyLabel: 'Copy code',
+      };
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -30,7 +58,7 @@ const structuredData = {
   description: post.data.description,
   datePublished: post.data.publishedAt.toISOString(),
   dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
-  inLanguage: site.language,
+  inLanguage: localeMeta[locale].language,
   mainEntityOfPage: canonical,
   author: { '@type': 'Person', name: site.author, url: site.url },
 };
@@ -41,22 +69,23 @@ const structuredData = {
   description={post.data.description}
   type="article"
   structuredData={structuredData}
+  {locale}
 >
   <article>
     <header class="reading-shell article-header">
       <div class="article-meta">
         <time datetime={post.data.publishedAt.toISOString()}
-          >{formatDate(post.data.publishedAt)}</time
+          >{formatDate(post.data.publishedAt, locale)}</time
         >
-        <span>{minutes} 分钟阅读</span>
+        <span>{text.readingTime}</span>
       </div>
       <h1>{post.data.title}</h1>
       <p>{post.data.description}</p>
-      <ul aria-label="文章标签">
+      <ul aria-label={text.tags}>
         {
           post.data.tags.map((tag) => (
             <li>
-              <a href={`/tags/${tag}/`}>#{tag}</a>
+              <a href={localizePath(`/tags/${tag}/`, locale)}>#{tag}</a>
             </li>
           ))
         }
@@ -64,19 +93,19 @@ const structuredData = {
     </header>
 
     <div class="article-grid site-shell">
-      <aside><TableOfContents headings={headings} /></aside>
+      <aside><TableOfContents headings={headings} {locale} /></aside>
       <div class="prose-content"><slot /></div>
       <aside class="article-side">
-        <p>Written by</p>
+        <p>{text.writtenBy}</p>
         <a href={site.githubCta} target="_blank" rel="noreferrer">{site.author} ↗</a>
       </aside>
     </div>
 
-    <nav class="reading-shell post-navigation" aria-label="上一篇和下一篇文章">
+    <nav class="reading-shell post-navigation" aria-label={text.navigation}>
       {
         previous ? (
-          <a href={`/blog/${previous.id}/`}>
-            <span>上一篇</span>
+          <a href={localizePath(`/blog/${previous.id}/`, locale)}>
+            <span>{text.previous}</span>
             {previous.data.title}
           </a>
         ) : (
@@ -85,8 +114,8 @@ const structuredData = {
       }
       {
         next ? (
-          <a class="next" href={`/blog/${next.id}/`}>
-            <span>下一篇</span>
+          <a class="next" href={localizePath(`/blog/${next.id}/`, locale)}>
+            <span>{text.next}</span>
             {next.data.title}
           </a>
         ) : (
@@ -96,6 +125,12 @@ const structuredData = {
     </nav>
   </article>
   <script>
+    const labels = {
+      copy: document.documentElement.lang === 'zh-CN' ? '复制' : 'Copy',
+      copied: document.documentElement.lang === 'zh-CN' ? '已复制' : 'Copied',
+      failed: document.documentElement.lang === 'zh-CN' ? '复制失败' : 'Copy failed',
+      copyAria: document.documentElement.lang === 'zh-CN' ? '复制代码' : 'Copy code',
+    };
     const copyText = async (text: string) => {
       try {
         await Promise.race([
@@ -122,17 +157,17 @@ const structuredData = {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'copy-code';
-      button.textContent = '复制';
-      button.setAttribute('aria-label', '复制代码');
+      button.textContent = labels.copy;
+      button.setAttribute('aria-label', labels.copyAria);
       button.addEventListener('click', async () => {
         const code = block.querySelector('code')?.textContent ?? '';
         try {
           await copyText(code);
-          button.textContent = '已复制';
+          button.textContent = labels.copied;
         } catch {
-          button.textContent = '复制失败';
+          button.textContent = labels.failed;
         }
-        setTimeout(() => (button.textContent = '复制'), 1400);
+        setTimeout(() => (button.textContent = labels.copy), 1400);
       });
       block.append(button);
     }

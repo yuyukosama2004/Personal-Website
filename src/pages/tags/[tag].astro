@@ -18,13 +18,20 @@ interface Props {
 const { tag, posts } = Astro.props;
 ---
 
-<BaseLayout title={`#${tag}`} description={`所有关于 ${tag} 的文章。`}>
+<BaseLayout
+  title={`#${tag}`}
+  description={`所有与 ${tag} 相关的文章。`}
+  locale="zh"
+  alternatePath="/en/blog/"
+>
   <section class="site-shell page-intro">
-    <a href="/blog">← 返回博客</a><p class="eyebrow">TOPIC</p><h1 class="display-title">
+    <a href="/blog">← 返回文章列表</a><p class="eyebrow">主题</p><h1 class="display-title">
       #{tag}
     </h1><p class="lede">{posts.length} 篇文章</p>
   </section>
-  <section class="site-shell posts">{posts.map((post) => <PostCard post={post} />)}</section>
+  <section class="site-shell posts">
+    {posts.map((post) => <PostCard post={post} locale="zh" />)}
+  </section>
 </BaseLayout>
 <style>
   .page-intro {

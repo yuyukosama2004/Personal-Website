@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import PostCard from '@/components/PostCard.astro';
+import { localizePath, type Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { byPublishedDesc, uniqueTags } from '@/utils/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const blogCollection = locale === 'zh' ? 'blog' : 'blogEn';
+const posts = (await getCollection(blogCollection, ({ data }) => !data.draft)).sort(
+  byPublishedDesc,
+);
+const tags = uniqueTags(posts);
+const copy = {
+  zh: {
+    title: '文章',
+    description: '关于全栈开发、AI 应用和 Agent 工具的开发记录。',
+    eyebrow: '开发笔记',
+    intro: '记录开发过程中真正遇到的问题、做过的取舍和可以复用的方法。',
+    tags: '文章标签',
+    list: '文章列表',
+  },
+  en: {
+    title: 'Writing',
+    description: 'Engineering notes on full-stack development, AI products, and agent tooling.',
+    eyebrow: 'NOTES & ESSAYS',
+    intro: 'Notes on real implementation problems, design trade-offs, and methods worth reusing.',
+    tags: 'Article tags',
+    list: 'Article list',
+  },
+}[locale];
+---
+
+<BaseLayout title={copy.title} description={copy.description} {locale}>
+  <section class="site-shell page-intro">
+    <p class="eyebrow">{copy.eyebrow}</p><h1 class="display-title">{copy.title}</h1><p class="lede">
+      {copy.intro}
+    </p><nav aria-label={copy.tags}>
+      {tags.map((tag) => <a href={localizePath(`/tags/${tag}/`, locale)}>#{tag}</a>)}
+    </nav>
+  </section>
+  <section class="site-shell posts" aria-label={copy.list}>
+    {posts.map((post) => <PostCard post={post} {locale} />)}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro {
+    padding-block: 8rem 4rem;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    gap: 0.6rem;
+  }
+  nav a {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-decoration: none;
+  }
+  .posts {
+    padding-bottom: 6rem;
+  }
+</style>

@@ -1,12 +1,19 @@
 export const site = {
   name: 'execute42',
-  title: 'execute42 · 全栈 AI 应用与 Agent 工程',
-  description:
-    'yuyukosama2004 的个人作品集：Java 与 Vue 全栈产品、RAG、MCP、Claude Code 工具，以及强调验证、审计和回滚的 AI 工程实践。',
   url: 'https://www.execute42.top',
   author: 'yuyukosama2004',
   github: 'https://github.com/yuyukosama2004',
   githubCta: '/go/github',
-  locale: 'zh_CN',
-  language: 'zh-CN',
+  locales: {
+    zh: {
+      title: 'execute42 · 全栈 AI 应用开发',
+      description:
+        'yuyukosama2004 的个人网站：记录 Java、Vue、Python、RAG 与 Agent 工具的项目实践、技术取舍和开发笔记。',
+    },
+    en: {
+      title: 'execute42 · Full-stack AI Products',
+      description:
+        'The portfolio of yuyukosama2004: full-stack AI products, RAG systems, agent tooling, and notes on how they are built and tested.',
+    },
+  },
 } as const;

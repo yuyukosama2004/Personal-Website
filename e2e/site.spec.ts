@@ -8,6 +8,12 @@ test('core routes render with their primary heading', async ({ page }) => {
     '/projects/phonemall/',
     '/blog/',
     '/about/',
+    '/en/',
+    '/en/projects/',
+    '/en/projects/ecc-init/',
+    '/en/projects/phonemall/',
+    '/en/blog/',
+    '/en/about/',
   ]) {
     const response = await page.goto(route);
     expect(response?.status(), route).toBe(200);
@@ -21,12 +27,18 @@ test('search finds indexed content', async ({ page }) => {
   await expect(input).toBeVisible();
   await input.fill('证据');
   await expect(page.locator('.pagefind-ui__result').first()).toBeVisible();
+
+  await page.goto('/en/search/');
+  const englishInput = page.locator('.pagefind-ui__search-input');
+  await expect(englishInput).toBeVisible();
+  await englishInput.fill('evidence');
+  await expect(page.locator('.pagefind-ui__result').first()).toBeVisible();
 });
 
 test('theme choice persists and the skip link works', async ({ page }) => {
   await page.goto('/');
   const before = await page.locator('html').getAttribute('data-theme');
-  await page.getByRole('button', { name: '切换深色或浅色主题' }).click();
+  await page.getByRole('button', { name: '切换明暗主题' }).click();
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', before ?? '');
   await page.reload();
   await expect(page.locator('html')).not.toHaveAttribute('data-theme', before ?? '');
@@ -55,6 +67,33 @@ test('featured projects follow the evidence-gated order', async ({ page }) => {
     'GroundedSeek',
     'PhoneMall',
   ]);
+  await page.goto('/en/');
+  await expect(page.locator('.project-grid h3')).toHaveText([
+    'ecc-init',
+    'GroundedSeek',
+    'PhoneMall',
+  ]);
+});
+
+test('language switch preserves the current content route and exposes hreflang links', async ({
+  page,
+}) => {
+  await page.goto('/projects/ecc-init/');
+  await expect(page.getByRole('link', { name: 'Read in English' })).toHaveAttribute(
+    'href',
+    '/en/projects/ecc-init/',
+  );
+  await expect(page.locator('link[hreflang="en"]')).toHaveAttribute(
+    'href',
+    'https://www.execute42.top/en/projects/ecc-init/',
+  );
+
+  await page.goto('/en/projects/ecc-init/');
+  await expect(page.getByRole('link', { name: '切换到中文' })).toHaveAttribute(
+    'href',
+    '/projects/ecc-init/',
+  );
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
 
 test('mobile layout has no horizontal overflow', async ({ page }) => {
@@ -65,15 +104,18 @@ test('mobile layout has no horizontal overflow', async ({ page }) => {
     content: document.documentElement.scrollWidth,
   }));
   expect(widths.content).toBeLessThanOrEqual(widths.viewport);
-  await expect(page.getByRole('navigation', { name: '主要导航' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible();
 });
 
 test('core content remains available without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('可运行、可验证、可恢复');
-  await expect(page.getByRole('link', { name: '查看精选项目' })).toBeVisible();
+  await expect(page.locator('h1')).toContainText('我做能真正跑起来的 AI 产品');
+  await expect(page.getByRole('link', { name: '看精选项目' })).toBeVisible();
+  await page.goto('/en/');
+  await expect(page.locator('h1')).toContainText('AI products that work beyond the demo');
+  await expect(page.getByRole('link', { name: 'View featured work' })).toBeVisible();
   await context.close();
 });
 

@@ -1,0 +1,455 @@
+---
+import { getCollection } from 'astro:content';
+
+import PostCard from '@/components/PostCard.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { site } from '@/config/site';
+import { localizePath, localeMeta, type Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { byProjectOrder, byPublishedDesc } from '@/utils/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const projectCollection = locale === 'zh' ? 'projects' : 'projectsEn';
+const blogCollection = locale === 'zh' ? 'blog' : 'blogEn';
+const projects = (await getCollection(projectCollection))
+  .filter((project) => project.data.tier === 'featured')
+  .sort(byProjectOrder);
+const posts = (await getCollection(blogCollection, ({ data }) => !data.draft))
+  .sort(byPublishedDesc)
+  .slice(0, 3);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', name: site.name, url: site.url, inLanguage: localeMeta[locale].language },
+    { '@type': 'Person', name: site.author, url: site.url, sameAs: [site.github] },
+  ],
+};
+const copy = {
+  zh: {
+    eyebrow: '全栈开发 · AI 应用',
+    title: '我做能真正跑起来的 AI 产品。',
+    lede: '主要使用 Java、Vue 和 Python，也会把 RAG、MCP 等能力接进具体业务。除了功能本身，我同样在意数据、测试、部署，以及出问题后能不能顺利恢复。',
+    viewFeatured: '看精选项目',
+    visitGithub: '访问 GitHub',
+    readNotes: '读开发笔记',
+    focusLabel: '最近在做',
+    focus: ['全栈应用开发', 'RAG 与智能检索', '测试、部署与回滚'],
+    selectedEyebrow: '精选项目',
+    selectedTitle: '不只展示结果，也说明我是怎么做取舍的。',
+    viewAllProjects: '查看全部项目',
+    selectedLabel: '精选项目',
+    capabilitiesEyebrow: '我能做什么',
+    capabilitiesTitle: '从业务功能做到上线运行。',
+    capabilities: [
+      {
+        title: '全栈应用开发',
+        body: '从业务建模、接口和前端交互，到数据库迁移、容器化和自托管部署，把一套产品完整做出来。',
+        tags: ['Java', 'Spring Cloud', 'Vue 3', 'Python', 'Docker'],
+      },
+      {
+        title: 'RAG 与智能检索',
+        body: '让模型基于真实数据回答问题，并把检索、引用、流式输出和评测接进实际使用流程。',
+        tags: ['RAG', 'MCP', 'SSE', 'Vector Search'],
+      },
+      {
+        title: '工程质量与上线',
+        body: '用测试、CI、日志、备份和回滚降低改动风险，让项目不仅能演示，也能继续维护。',
+        tags: ['CI/CD', 'Testing', 'Audit', 'Rollback'],
+      },
+    ],
+    methodEyebrow: '我的做法',
+    methodTitle: '把一个想法稳稳地做成产品。',
+    workflow: [
+      ['先把问题说清楚', '明确用户真正要解决什么，以及哪些决定必须由人来做。'],
+      ['打通完整流程', '把界面、接口、数据、模型和部署环境连接起来。'],
+      ['用测试核对结果', '通过自动化测试、静态检查和来源记录发现问题。'],
+      ['给上线留好退路', '重要改动可以追踪，出现故障时也能备份和回滚。'],
+    ],
+    latestEyebrow: '最近更新',
+    latestTitle: '记录项目里真正遇到的问题。',
+    readAll: '查看全部文章',
+    closingEyebrow: '关于 execute42',
+    closingTitle: '把 AI 放进产品，而不只是做一个聊天框。',
+    closingBody:
+      '这里会持续更新项目案例、架构思路和开发笔记。你可以先看项目了解我做过什么，也可以到 GitHub 查看公开代码。',
+    about: '了解我在做什么',
+  },
+  en: {
+    eyebrow: 'FULL-STACK DEVELOPMENT · AI PRODUCTS',
+    title: 'I build AI products that work beyond the demo.',
+    lede: 'I work mainly with Java, Vue, and Python, bringing RAG, MCP, and language models into real product workflows. I care about the data, tests, deployment, and recovery path—not just the model call.',
+    viewFeatured: 'View featured work',
+    visitGithub: 'Visit GitHub',
+    readNotes: 'Read engineering notes',
+    focusLabel: 'Currently working on',
+    focus: [
+      'Full-stack applications',
+      'RAG and intelligent search',
+      'Testing, deployment, and recovery',
+    ],
+    selectedEyebrow: 'SELECTED WORK',
+    selectedTitle: 'Projects explained through decisions, trade-offs, and evidence.',
+    viewAllProjects: 'View all projects',
+    selectedLabel: 'Featured projects',
+    capabilitiesEyebrow: 'CAPABILITIES',
+    capabilitiesTitle: 'From product requirements to a running deployment.',
+    capabilities: [
+      {
+        title: 'Full-stack application development',
+        body: 'I take products from domain models, APIs, and user interfaces through database migrations, containers, and self-hosted deployment.',
+        tags: ['Java', 'Spring Cloud', 'Vue 3', 'Python', 'Docker'],
+      },
+      {
+        title: 'RAG and intelligent search',
+        body: 'I connect models to real data and build retrieval, citations, streaming responses, and evaluation into the workflow.',
+        tags: ['RAG', 'MCP', 'SSE', 'Vector Search'],
+      },
+      {
+        title: 'Quality and operations',
+        body: 'Tests, CI, logs, backups, and rollback keep a project maintainable after the first successful demo.',
+        tags: ['CI/CD', 'Testing', 'Audit', 'Rollback'],
+      },
+    ],
+    methodEyebrow: 'HOW I WORK',
+    methodTitle: 'Turning an idea into a product without losing control of it.',
+    workflow: [
+      [
+        'Define the real problem',
+        'Clarify the user need and identify which decisions must remain human.',
+      ],
+      [
+        'Complete the workflow',
+        'Connect the interface, APIs, data, model, and deployment environment.',
+      ],
+      [
+        'Check the result',
+        'Use automated tests, static checks, and source records to catch mistakes.',
+      ],
+      [
+        'Plan for recovery',
+        'Keep important changes traceable and make failures recoverable through backups and rollback.',
+      ],
+    ],
+    latestEyebrow: 'LATEST WRITING',
+    latestTitle: 'Notes from problems I have actually encountered while building.',
+    readAll: 'View all articles',
+    closingEyebrow: 'ABOUT EXECUTE42',
+    closingTitle: 'Putting AI into products—not just into chat boxes.',
+    closingBody:
+      'I use this site to document projects, architecture decisions, and engineering lessons. Start with the case studies, or visit GitHub for the public code.',
+    about: 'Learn more about me',
+  },
+}[locale];
+const capabilities = copy.capabilities;
+const workflow = copy.workflow;
+---
+
+<BaseLayout {locale} structuredData={structuredData}>
+  <section class="site-shell hero">
+    <div>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1 class="display-title">{copy.title}</h1>
+      <p class="lede">{copy.lede}</p>
+      <div class="button-row">
+        <a class="button primary" href={localizePath('/projects', locale)}>{copy.viewFeatured}</a>
+        <a class="button" href={site.githubCta} target="_blank" rel="noreferrer"
+          >{copy.visitGithub} ↗</a
+        >
+        <a class="text-link hero-note-link" href={localizePath('/blog', locale)}
+          >{copy.readNotes} →</a
+        >
+      </div>
+    </div>
+    <aside class="signal-card panel" aria-label={copy.focusLabel}>
+      <span class="status"><i></i> {copy.focusLabel}</span>
+      <dl>
+        {
+          copy.focus.map((item, index) => (
+            <div>
+              <>
+                <dt>{String(index + 1).padStart(2, '0')}</dt>
+                <dd>{item}</dd>
+              </>
+            </div>
+          ))
+        }
+      </dl>
+    </aside>
+  </section>
+
+  <section class="site-shell section-heading">
+    <div>
+      <p class="eyebrow">{copy.selectedEyebrow}</p><h2 class="section-title">
+        {copy.selectedTitle}
+      </h2>
+    </div>
+    <a class="text-link" href={localizePath('/projects', locale)}>{copy.viewAllProjects} →</a>
+  </section>
+  <section class="site-shell project-grid" aria-label={copy.selectedLabel}>
+    {projects.map((project, index) => <ProjectCard project={project} index={index} {locale} />)}
+  </section>
+
+  <section class="site-shell capability-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{copy.capabilitiesEyebrow}</p>
+        <h2 class="section-title">{copy.capabilitiesTitle}</h2>
+      </div>
+    </div>
+    <div class="capability-grid">
+      {
+        capabilities.map((capability, index) => (
+          <article class="capability-card">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{capability.title}</h3>
+            <p>{capability.body}</p>
+            <ul aria-label={`${capability.title}技术`}>
+              {capability.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="site-shell workflow-section">
+    <div>
+      <p class="eyebrow">{copy.methodEyebrow}</p>
+      <h2 class="section-title">{copy.methodTitle}</h2>
+    </div>
+    <ol>
+      {
+        workflow.map(([title, body], index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="site-shell notes-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{copy.latestEyebrow}</p><h2 class="section-title">{copy.latestTitle}</h2>
+      </div><a class="text-link" href={localizePath('/blog', locale)}>{copy.readAll} →</a>
+    </div>
+    <div>{posts.map((post) => <PostCard post={post} {locale} />)}</div>
+  </section>
+
+  <section class="site-shell closing panel">
+    <div>
+      <p class="eyebrow">{copy.closingEyebrow}</p>
+      <h2 class="section-title">{copy.closingTitle}</h2>
+      <p>{copy.closingBody}</p>
+    </div>
+    <div class="button-row">
+      <a class="button primary" href={localizePath('/about', locale)}>{copy.about}</a>
+      <a class="button" href={localizePath('/projects', locale)}>{copy.viewAllProjects}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    min-height: min(49rem, calc(100vh - 4.5rem));
+    grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.55fr);
+    align-items: center;
+    gap: clamp(2rem, 7vw, 7rem);
+    padding-block: 6rem;
+  }
+  .lede {
+    margin: 2rem 0;
+  }
+  .hero-note-link {
+    align-self: center;
+    margin-left: 0.25rem;
+  }
+  .signal-card {
+    padding: 1.35rem;
+    transform: rotate(1.5deg);
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .status i {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0.28rem var(--accent-soft);
+  }
+  dl {
+    margin: 3.5rem 0 0;
+  }
+  dl div {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    gap: 0.75rem;
+  }
+  dt {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  dd {
+    margin: 0;
+    font-weight: 700;
+  }
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  section.section-heading {
+    padding-block: 5rem 2rem;
+  }
+  .section-heading h2 {
+    max-width: 18ch;
+  }
+  .text-link {
+    color: var(--accent-strong);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .capability-section,
+  .workflow-section {
+    padding-block: 8rem 2rem;
+  }
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .capability-card {
+    padding: 1.5rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .capability-card > span,
+  .workflow-section li > span {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  .capability-card h3,
+  .workflow-section h3 {
+    margin: 2rem 0 0.6rem;
+    font-size: 1.25rem;
+  }
+  .capability-card p,
+  .workflow-section p,
+  .closing p {
+    color: var(--muted);
+  }
+  .capability-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    gap: 0.4rem;
+    list-style: none;
+  }
+  .capability-card li {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+  .workflow-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+  .workflow-section ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .workflow-section li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--line);
+    gap: 1rem;
+  }
+  .workflow-section h3 {
+    margin: 0;
+  }
+  .workflow-section p {
+    margin: 0.4rem 0 0;
+  }
+  .notes-section {
+    padding-block: 8rem 5rem;
+  }
+  .notes-section > .section-heading {
+    margin-bottom: 2rem;
+  }
+  .closing {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 6rem;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    gap: 3rem;
+  }
+  .closing p:not(.eyebrow) {
+    max-width: 42rem;
+    margin-bottom: 0;
+  }
+  @media (max-width: 52rem) {
+    .hero {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      padding-block: 5rem;
+    }
+    .signal-card {
+      transform: none;
+    }
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+    .capability-grid {
+      grid-template-columns: 1fr;
+    }
+    .workflow-section {
+      grid-template-columns: 1fr;
+    }
+    .closing {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 36rem) {
+    .section-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

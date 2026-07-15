@@ -47,13 +47,13 @@ GitHub Actions 自动构建并部署到云服务器，最终由 Nginx 提供 HTT
 
 中文定位：
 
-> 构建可运行、可验证、可恢复的 AI 产品。
+> 我做能真正跑起来的 AI 产品。
 
 英文定位：
 
-> Building controllable, verifiable, and recoverable AI products.
+> I build AI products that work beyond the demo.
 
-完整定位为“全栈 AI 应用与 Agent 工程开发者”。展示强调模型能力如何被约束、验证、审计和恢复，同时保留 Java、Vue、Python、RAG、MCP 与自托管部署的全栈证据。详细的上线后改造决策见 `docs/PORTFOLIO_REDESIGN.md`。
+完整定位为“做全栈 AI 应用和开发者工具的开发者”。展示重点是项目解决的问题、实际取舍和验证情况，同时保留 Java、Vue、Python、RAG、MCP 与自托管部署的工程证据。详细的上线后改造决策见 `docs/PORTFOLIO_REDESIGN.md`。
 
 ### 1.3 MVP 成功标准
 
@@ -356,7 +356,7 @@ MVP 至少完成前两篇，其他文章进入发布队列。
 
 ### 6.3 P2：仅在需求成立后实施
 
-- 中英文多语言。
+- [x] 中英文多语言（中文根路径，英文 `/en/`）。
 - Newsletter / 邮件订阅。
 - Headless CMS 或网页编辑后台。
 - 动态 GitHub 活动、贡献图和 Star 数据。
@@ -901,7 +901,7 @@ Pull Request 内容审阅
 | WEB-602 | 完善 GitHub Profile README | P1 | WEB-507 | 主页链接网站和主项目 |
 | WEB-603 | 为公开仓库增加网站反向链接 | P1 | WEB-507 | 链接检查通过 |
 | WEB-604 | 评估并接入评论系统 | P2 | 有真实需求 | 隐私和维护成本可接受 |
-| WEB-605 | 评估中英文多语言 | P2 | 有海外访问数据 | 范围和翻译流程明确 |
+| WEB-605 | 建立中英文多语言 | P2 | 用户明确需求 | 双语路由、切换、SEO、搜索和 RSS 验证通过 |
 
 ---
 
@@ -985,7 +985,7 @@ Pull Request 内容审阅
 ## 19. 已落地决策
 
 1. 公开身份使用 `yuyukosama2004`，站点品牌使用 `execute42`，不披露未经确认的真实姓名。
-2. 首版内容以中文为主，保留简短英文定位；完整英文版等待真实海外需求。
+2. 中文内容使用根路径，完整英文版位于 `/en/`；成对页面使用 canonical 与 `hreflang` 互相标注。
 3. 使用克制的系统字体、亮暗主题、绿色强调色和 `42` 身份视觉，避免大型前端动效运行时。
 4. 首版以 GitHub 作为公开联系入口，不公开未经确认的私人邮箱。
 5. 私有项目只展示公开案例、系统图和工程取舍，不显示失效或不可访问的源码按钮。

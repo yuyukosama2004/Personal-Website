@@ -1,18 +1,24 @@
 ---
 import { site } from '@/config/site';
+import { localizePath, sharedUi, type Locale } from '@/i18n';
 
 const year = new Date().getFullYear();
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const ui = sharedUi[locale];
 ---
 
 <footer>
   <div class="site-shell footer-inner">
     <div>
       <p class="footer-mark">{site.name}</p>
-      <p>可运行、可验证、可恢复的 AI 产品与工程实践。</p>
+      <p>{ui.footerLine}</p>
     </div>
     <div class="footer-links">
-      <a href="/rss.xml">RSS</a>
-      <a href="/about">关于</a>
+      <a href={localizePath('/rss.xml', locale)}>RSS</a>
+      <a href={localizePath('/about', locale)}>{ui.about}</a>
       <a href={site.githubCta} target="_blank" rel="noreferrer">GitHub ↗</a>
     </div>
     <p class="copyright">© {year} {site.author}</p>

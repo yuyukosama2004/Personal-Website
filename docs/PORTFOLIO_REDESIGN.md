@@ -2,21 +2,21 @@
 
 Decision date: 2026-07-15 (Asia/Shanghai)
 
-Status: **P0A implementation in progress; media-gated promotion remains pending.**
+Status: **P0A and bilingual copy complete; media-gated promotion remains pending.**
 
 ## Positioning
 
 Chinese:
 
-> 全栈 AI 应用与 Agent 工程开发者，关注如何让模型能力以可控、可验证、可审计、可恢复的方式进入实际产品。
+> 我主要做全栈 AI 应用和开发者工具，也会认真处理数据、测试、部署和回滚。
 
 Short version:
 
-> 构建可运行、可验证、可恢复的 AI 产品。
+> 我做能真正跑起来的 AI 产品。
 
 English:
 
-> Full-stack AI application and agent tooling developer, focused on making model-driven systems controllable, verifiable, inspectable, and recoverable.
+> I build full-stack AI products and developer tools, with equal attention to data, testing, deployment, and recovery.
 
 ## Fact, proposal and gate
 
