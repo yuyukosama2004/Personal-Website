@@ -40,9 +40,10 @@ The deploy script validates the archive, switches the symlink, and requests `/`,
 
 ## DNS and TLS
 
-`www.execute42.top` must resolve to `8.153.98.251`. The independent Nginx vhost reuses the existing
-certificate only while it remains valid and includes the `www.execute42.top` SAN. Once DNS resolves,
-replace it with an automatically renewed certificate and verify the renewal timer before launch.
+`www.execute42.top` resolves to `8.153.98.251`. Its independent Nginx vhost uses the Certbot-managed
+certificate at `/etc/letsencrypt/live/www.execute42.top/`. The HTTP challenge webroot is
+`/var/www/personal-website/acme`, and the deploy hook tests and reloads Nginx after a successful
+renewal. Verify `certbot.timer` and run a renewal dry run after changing any related configuration.
 
 ## Anonymous traffic reports
 
