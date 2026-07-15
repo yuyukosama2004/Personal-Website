@@ -1,5 +1,7 @@
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('zh-CN', {
+import type { Locale } from '@/i18n';
+
+export function formatDate(date: Date, locale: Locale = 'zh'): string {
+  return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

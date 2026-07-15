@@ -2,6 +2,7 @@
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import { site } from '@/config/site';
+import { alternateLocalePath, localeFromPath, localeMeta, sharedUi, type Locale } from '@/i18n';
 import '@/styles/global.css';
 import { getImage } from 'astro:assets';
 import identityImage from '../../public/images/identity-42.png';
@@ -13,24 +14,34 @@ interface Props {
   type?: 'website' | 'article';
   noindex?: boolean;
   structuredData?: Record<string, unknown>;
+  locale?: Locale;
+  alternatePath?: string;
 }
 
+const inferredLocale = localeFromPath(Astro.url.pathname);
 const {
-  title = site.title,
-  description = site.description,
+  locale = inferredLocale,
+  title = site.locales[locale].title,
+  description = site.locales[locale].description,
   image = '/images/og-default.png',
   type = 'website',
   noindex = false,
   structuredData,
+  alternatePath = alternateLocalePath(Astro.url.pathname),
 } = Astro.props;
-const pageTitle = title === site.title ? title : `${title} · ${site.name}`;
+const pageTitle = title === site.locales[locale].title ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url);
+const alternateLocale = locale === 'zh' ? 'en' : 'zh';
+const alternateUrl = new URL(alternatePath, site.url);
+const zhUrl = locale === 'zh' ? canonical : alternateUrl;
+const enUrl = locale === 'en' ? canonical : alternateUrl;
 const socialImage = image ? new URL(image, site.url) : undefined;
 const favicon = await getImage({ src: identityImage, width: 64, height: 64, format: 'webp' });
+const ui = sharedUi[locale];
 ---
 
 <!doctype html>
-<html lang={site.language}>
+<html lang={localeMeta[locale].language}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -41,31 +52,32 @@ const favicon = await getImage({ src: identityImage, width: 64, height: 64, form
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml" />
+    <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={zhUrl} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.name} RSS`}
+      href={locale === 'en' ? '/en/rss.xml' : '/rss.xml'}
+    />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:locale" content={site.locale} />
+    <meta property="og:locale" content={localeMeta[locale].openGraphLocale} />
+    <meta property="og:locale:alternate" content={localeMeta[alternateLocale].openGraphLocale} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     {socialImage && <meta property="og:image" content={socialImage} />}
     {socialImage && <meta property="og:image:width" content="1664" />}
     {socialImage && <meta property="og:image:height" content="924" />}
-    {
-      socialImage && (
-        <meta property="og:image:alt" content={`${site.name} — 可控、可验证的 AI 系统`} />
-      )
-    }
+    {socialImage && <meta property="og:image:alt" content={ui.socialImageAlt} />}
     <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     {socialImage && <meta name="twitter:image" content={socialImage} />}
-    {
-      socialImage && (
-        <meta name="twitter:image:alt" content={`${site.name} — 可控、可验证的 AI 系统`} />
-      )
-    }
+    {socialImage && <meta name="twitter:image:alt" content={ui.socialImageAlt} />}
     {
       structuredData && (
         <script
@@ -85,11 +97,11 @@ const favicon = await getImage({ src: identityImage, width: 64, height: 64, form
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">跳到正文</a>
-    <SiteHeader />
-    <main id="main-content" data-pagefind-body>
+    <a class="skip-link" href="#main-content">{ui.skipToContent}</a>
+    <SiteHeader {locale} languageHref={alternatePath} />
+    <main id="main-content" data-pagefind-body data-pagefind-filter={`language:${locale}`}>
       <slot />
     </main>
-    <SiteFooter />
+    <SiteFooter {locale} />
   </body>
 </html>

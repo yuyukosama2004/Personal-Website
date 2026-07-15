@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '@/components/ProjectCard.astro';
+import type { Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { byProjectOrder } from '@/utils/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const projectCollection = locale === 'zh' ? 'projects' : 'projectsEn';
+const projects = (await getCollection(projectCollection)).sort(byProjectOrder);
+const featured = projects.filter((project) => project.data.tier === 'featured');
+const more = projects.filter((project) => project.data.tier === 'more');
+const labs = projects.filter((project) => project.data.tier === 'lab');
+const copy = {
+  zh: {
+    title: '项目',
+    description: '我正在开发的全栈应用、AI 工具和个人实验。',
+    eyebrow: '项目',
+    intro: '这里不只列技术栈。我也会说明每个项目解决什么问题、为什么这样设计，以及目前还缺什么。',
+    featured: '重点项目',
+    moreEyebrow: '更多作品',
+    more: '其他项目',
+    labsEyebrow: '实验与实践',
+    labs: '个人实验',
+  },
+  en: {
+    title: 'Projects',
+    description:
+      'Full-stack applications, AI tools, and personal experiments currently in development.',
+    eyebrow: 'PROJECTS',
+    intro:
+      'These pages cover more than the technology stack: what each project solves, why it was designed this way, what has been verified, and what is still missing.',
+    featured: 'Featured projects',
+    moreEyebrow: 'MORE WORK',
+    more: 'Other projects',
+    labsEyebrow: 'LABS & PRACTICE',
+    labs: 'Personal experiments',
+  },
+}[locale];
+---
+
+<BaseLayout title={copy.title} description={copy.description} {locale}>
+  <section class="site-shell page-intro">
+    <p class="eyebrow">{copy.eyebrow}</p><h1 class="display-title">{copy.title}</h1><p class="lede">
+      {copy.intro}
+    </p>
+  </section>
+  <section class="site-shell">
+    <h2 class="section-title">{copy.featured}</h2><div class="project-grid">
+      {featured.map((project, index) => <ProjectCard project={project} index={index} {locale} />)}
+    </div>
+  </section>
+  <section class="site-shell more-section">
+    <p class="eyebrow">{copy.moreEyebrow}</p><h2 class="section-title">{copy.more}</h2><div
+      class="project-grid"
+    >
+      {
+        more.map((project, index) => (
+          <ProjectCard project={project} index={featured.length + index} {locale} />
+        ))
+      }
+    </div>
+  </section>
+  <section class="site-shell lab-section">
+    <p class="eyebrow">{copy.labsEyebrow}</p><h2 class="section-title">{copy.labs}</h2><div
+      class="project-grid"
+    >
+      {
+        labs.map((project, index) => (
+          <ProjectCard project={project} index={featured.length + more.length + index} {locale} />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-intro {
+    padding-block: 8rem 5rem;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+  .more-section,
+  .lab-section {
+    padding-block: 8rem 5rem;
+  }
+  @media (max-width: 52rem) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

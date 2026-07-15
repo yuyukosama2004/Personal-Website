@@ -1,3 +1,5 @@
+import type { Locale } from '@/i18n';
+
 type ProjectState = {
   sourceVisibility: 'public' | 'private';
   maturity: 'alpha' | 'beta' | 'experimental';
@@ -5,7 +7,24 @@ type ProjectState = {
   license: string | null;
 };
 
-export function projectStatusLabel(project: ProjectState): string {
+export function projectStatusLabel(project: ProjectState, locale: Locale = 'zh'): string {
+  if (locale === 'zh') {
+    const visibility =
+      project.sourceVisibility === 'public'
+        ? project.license
+          ? '开源项目'
+          : '公开仓库'
+        : project.tier === 'lab'
+          ? '个人实验'
+          : '私有项目案例';
+    const maturity = {
+      alpha: 'Alpha',
+      beta: 'Beta',
+      experimental: '实验中',
+    }[project.maturity];
+    return `${visibility} · ${maturity}`;
+  }
+
   const visibility =
     project.sourceVisibility === 'public'
       ? project.license

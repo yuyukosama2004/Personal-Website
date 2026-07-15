@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const copy = {
+  zh: {
+    title: '搜索',
+    description: '搜索 execute42 的项目和文章。',
+    intro: '输入项目名称、技术或问题关键词。搜索会直接在浏览器中完成。',
+    noScript: '请启用 JavaScript 使用站内搜索。',
+  },
+  en: {
+    title: 'Search',
+    description: 'Search execute42 projects and articles.',
+    intro: 'Search by project, technology, or problem. The index runs entirely in your browser.',
+    noScript: 'Enable JavaScript to use site search.',
+  },
+}[locale];
+---
+
+<BaseLayout title={copy.title} description={copy.description} {locale}>
+  <section class="site-shell page-intro" data-pagefind-ignore>
+    <p class="eyebrow">SEARCH</p>
+    <h1 class="display-title">{copy.title}</h1>
+    <p class="lede">{copy.intro}</p>
+  </section>
+  <section class="site-shell search-section" data-pagefind-ignore>
+    <div id="search"></div>
+    <noscript>{copy.noScript}</noscript>
+  </section>
+
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline define:vars={{ locale }}>
+    window.addEventListener('DOMContentLoaded', () => {
+      const PagefindUI = window.PagefindUI;
+      if (!PagefindUI) return;
+      new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+        filters: { language: locale },
+        translations:
+          locale === 'zh'
+            ? { placeholder: '搜索本站', zero_results: '没有找到 [SEARCH_TERM] 的相关内容' }
+            : { placeholder: 'Search this site', zero_results: 'No results for [SEARCH_TERM]' },
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .page-intro {
+    padding-block: 8rem 3rem;
+  }
+  .search-section {
+    min-height: 30rem;
+    padding-bottom: 6rem;
+  }
+  #search {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--accent-strong);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--surface-strong);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-tag: var(--accent-soft);
+    max-width: 50rem;
+  }
+  #search .pagefind-ui__search-input {
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+  }
+  #search .pagefind-ui__result-link {
+    color: var(--text);
+  }
+  #search .pagefind-ui__result-excerpt {
+    color: var(--muted);
+  }
+</style>

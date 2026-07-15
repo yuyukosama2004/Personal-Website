@@ -1,46 +1,69 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { localizePath, type Locale } from '@/i18n';
 import { projectStatusLabel } from '@/utils/projects';
 
 interface Props {
-  project: CollectionEntry<'projects'>;
+  project: CollectionEntry<'projects'> | CollectionEntry<'projectsEn'>;
   index?: number;
+  locale?: Locale;
 }
 
-const { project, index = 0 } = Astro.props;
+const { project, index = 0, locale = 'zh' } = Astro.props;
 const { name, tagline, category, tech, accent, evidence, evidenceStats } = project.data;
 const categoryLabels = {
-  product: 'Local-first product',
-  research: 'Research tooling',
-  engineering: 'Developer tooling',
-  application: 'Full-stack application',
-  lab: 'Personal lab',
+  zh: {
+    product: '本地优先产品',
+    research: '研究工具',
+    engineering: '开发者工具',
+    application: '全栈应用',
+    lab: '个人实验',
+  },
+  en: {
+    product: 'Local-first product',
+    research: 'Research tooling',
+    engineering: 'Developer tooling',
+    application: 'Full-stack application',
+    lab: 'Personal lab',
+  },
 };
 const evidenceLabels = {
-  verified: '证据已核验',
-  partial: '案例整理中',
-  planned: '实验记录',
+  zh: { verified: '有可核对的工程证据', partial: '公开材料仍在整理', planned: '实验记录' },
+  en: {
+    verified: 'Evidence available',
+    partial: 'Public material in progress',
+    planned: 'Lab notes',
+  },
 };
+const text =
+  locale === 'zh'
+    ? { tech: '技术栈', stats: '验证数据', measured: '统计日期', view: '查看项目' }
+    : {
+        tech: 'Technology stack',
+        stats: 'Verification data',
+        measured: 'Measured',
+        view: 'View project',
+      };
 ---
 
 <article class="project-card panel" style={`--project-accent: ${accent}`}>
-  <a href={`/projects/${project.id}/`}>
+  <a href={localizePath(`/projects/${project.id}/`, locale)}>
     <div class="card-top">
-      <span>{String(index + 1).padStart(2, '0')} / {categoryLabels[category]}</span>
-      <span class="status">{projectStatusLabel(project.data)}</span>
+      <span>{String(index + 1).padStart(2, '0')} / {categoryLabels[locale][category]}</span>
+      <span class="status">{projectStatusLabel(project.data, locale)}</span>
     </div>
     <div class="project-mark" aria-hidden="true">{name.slice(0, 2).toUpperCase()}</div>
     <div>
       <h3>{name}</h3>
       <p>{tagline}</p>
-      <ul aria-label="技术栈">
+      <ul aria-label={text.tech}>
         {tech.slice(0, 4).map((item) => <li>{item}</li>)}
       </ul>
       {
         evidenceStats.length > 0 && (
-          <dl class="evidence-stats" aria-label="验证数据">
+          <dl class="evidence-stats" aria-label={text.stats}>
             {evidenceStats.map((stat) => (
-              <div title={`统计于 ${stat.measuredAt.toISOString().slice(0, 10)}`}>
+              <div title={`${text.measured}: ${stat.measuredAt.toISOString().slice(0, 10)}`}>
                 <dt>{stat.value}</dt>
                 <dd>{stat.label}</dd>
               </div>
@@ -49,8 +72,8 @@ const evidenceLabels = {
         )
       }
       <footer>
-        <span>{evidenceLabels[evidence]}</span>
-        <strong>查看案例 →</strong>
+        <span>{evidenceLabels[locale][evidence]}</span>
+        <strong>{text.view} →</strong>
       </footer>
     </div>
   </a>

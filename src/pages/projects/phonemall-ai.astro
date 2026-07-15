@@ -5,7 +5,7 @@ const target = `${site.url}/projects/phonemall/`;
 ---
 
 <!doctype html>
-<html lang={site.language}>
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -14,6 +14,9 @@ const target = `${site.url}/projects/phonemall/`;
     <meta name="robots" content="noindex, follow" />
     <meta http-equiv="refresh" content={`0;url=${target}`} />
     <link rel="canonical" href={target} />
+    <link rel="alternate" hreflang="zh-CN" href={target} />
+    <link rel="alternate" hreflang="en" href={`${site.url}/en/projects/phonemall/`} />
+    <link rel="alternate" hreflang="x-default" href={target} />
   </head>
   <body>
     <main>
