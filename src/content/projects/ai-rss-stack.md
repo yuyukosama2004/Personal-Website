@@ -1,7 +1,7 @@
 ---
 name: AI RSS Stack
-tagline: 用自己的订阅系统跟踪真正关心的更新
-summary: 用 FreshRSS、RSSHub、changedetection.io 和 GitHub Release Feed 搭建自托管订阅系统，在一个地方跟踪软件发布与网页变化。
+tagline: 自己决定看什么，也自己决定什么时候看
+summary: 一套自托管的订阅系统，用 FreshRSS、RSSHub 和 changedetection.io 把软件更新、网页变化集中到一个地方。
 category: lab
 tier: lab
 order: 6
@@ -15,17 +15,17 @@ githubUrl: null
 demoUrl: null
 tech: [FreshRSS, RSSHub, Docker, changedetection.io]
 evidenceStats: []
-flow: [选择信息源, 生成或监测订阅, 聚合去重, 集中阅读]
+flow: [挑选想长期关注的信息源, 生成订阅或监测页面变化, 汇总并去掉重复内容, 找时间集中阅读]
 relatedPosts: []
 accent: '#a16c37'
 ---
 
 ## 动机
 
-算法推荐很擅长让人一直刷下去，却不适合长期跟踪一组明确的信息源。AI RSS Stack 让我自己决定订阅什么、怎样去重，以及什么时候阅读。
+算法推荐很会让人一直往下刷，但我想要的是另一种方式：列出自己真正关心的信息源，有更新时收到提醒，没更新时也不用反复去看。
 
-## 组成
+## 怎么搭的
 
-FreshRSS 负责集中阅读，RSSHub 为没有原生订阅的站点生成 Feed，changedetection.io 监测普通网页的变化，GitHub Release Feed 则直接跟踪依赖和工具的新版本。
+FreshRSS 是统一的阅读入口；没有 RSS 的网站交给 RSSHub；普通网页的变化由 changedetection.io 监测；软件版本则直接订阅 GitHub Release Feed。
 
-这是一个还在调整的个人实验。目标不是收集更多信息，而是减少噪声，持续了解真正重要的项目。
+这套东西还在边用边调。我的目标不是收集更多内容，而是少刷一点推荐流，同时别错过真正关心的更新。
