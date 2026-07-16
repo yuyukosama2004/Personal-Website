@@ -6,9 +6,8 @@ export const site = {
   githubCta: '/go/github',
   locales: {
     zh: {
-      title: 'execute42 · 全栈 AI 应用开发',
-      description:
-        'yuyukosama2004 的个人网站：记录 Java、Vue、Python、RAG 与 Agent 工具的项目实践、技术取舍和开发笔记。',
+      title: 'execute42 · yuyukosama2004 的个人网站',
+      description: 'yuyukosama2004 的个人网站，收录正在开发的应用、AI 工具和开发笔记。',
     },
     en: {
       title: 'execute42 · Full-stack AI Products',

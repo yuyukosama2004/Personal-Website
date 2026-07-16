@@ -111,8 +111,8 @@ test('core content remains available without JavaScript', async ({ browser }) =>
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('我做能真正跑起来的 AI 产品');
-  await expect(page.getByRole('link', { name: '看精选项目' })).toBeVisible();
+  await expect(page.locator('h1')).toContainText('这里放着我做过的项目');
+  await expect(page.getByRole('link', { name: '先看看项目' })).toBeVisible();
   await page.goto('/en/');
   await expect(page.locator('h1')).toContainText('AI products that work beyond the demo');
   await expect(page.getByRole('link', { name: 'View featured work' })).toBeVisible();

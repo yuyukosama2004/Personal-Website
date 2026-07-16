@@ -29,53 +29,53 @@ const structuredData = {
 };
 const copy = {
   zh: {
-    eyebrow: '全栈开发 · AI 应用',
-    title: '我做能真正跑起来的 AI 产品。',
-    lede: '主要使用 Java、Vue 和 Python，也会把 RAG、MCP 等能力接进具体业务。除了功能本身，我同样在意数据、测试、部署，以及出问题后能不能顺利恢复。',
-    viewFeatured: '看精选项目',
-    visitGithub: '访问 GitHub',
-    readNotes: '读开发笔记',
-    focusLabel: '最近在做',
-    focus: ['全栈应用开发', 'RAG 与智能检索', '测试、部署与回滚'],
-    selectedEyebrow: '精选项目',
-    selectedTitle: '不只展示结果，也说明我是怎么做取舍的。',
+    eyebrow: '个人作品集 · 开发笔记',
+    title: '你好，我是 yuyukosama2004。这里放着我做过的项目，也记录我是怎么把它们做出来的。',
+    lede: '我主要用 Java、Vue 和 Python 做全栈开发，最近把更多精力放在 RAG、MCP 和 AI 工具上。比起只做一个能演示的原型，我更在意功能是否完整、问题能否查清，以及项目以后还能不能继续维护。',
+    viewFeatured: '先看看项目',
+    visitGithub: '去 GitHub',
+    readNotes: '看看开发笔记',
+    focusLabel: '最近在折腾',
+    focus: ['PhoneMall 的 RAG 导购', 'GroundedSeek 研究工作台', 'Agent 开发工具和流程'],
+    selectedEyebrow: '正在做的项目',
+    selectedTitle: '有些已经能用，有些还在慢慢补完。',
     viewAllProjects: '查看全部项目',
     selectedLabel: '精选项目',
-    capabilitiesEyebrow: '我能做什么',
-    capabilitiesTitle: '从业务功能做到上线运行。',
+    capabilitiesEyebrow: '技术方向',
+    capabilitiesTitle: '我平时主要做这些。',
     capabilities: [
       {
-        title: '全栈应用开发',
-        body: '从业务建模、接口和前端交互，到数据库迁移、容器化和自托管部署，把一套产品完整做出来。',
+        title: '前后端一起做',
+        body: '用 Java 或 Python 写服务端，用 Vue 或 React 做界面，再把数据库、接口和部署环境接起来。',
         tags: ['Java', 'Spring Cloud', 'Vue 3', 'Python', 'Docker'],
       },
       {
-        title: 'RAG 与智能检索',
-        body: '让模型基于真实数据回答问题，并把检索、引用、流式输出和评测接进实际使用流程。',
+        title: '把 AI 接进具体功能',
+        body: '我更关心 AI 能不能解决一个明确的问题，比如查商品、整理资料、辅助写作，而不只是接一个聊天框。',
         tags: ['RAG', 'MCP', 'SSE', 'Vector Search'],
       },
       {
-        title: '工程质量与上线',
-        body: '用测试、CI、日志、备份和回滚降低改动风险，让项目不仅能演示，也能继续维护。',
+        title: '让项目可以继续改',
+        body: '写测试、接 CI、留日志，也准备好备份和回滚。这样改坏了能发现，出了问题也有地方可查。',
         tags: ['CI/CD', 'Testing', 'Audit', 'Rollback'],
       },
     ],
-    methodEyebrow: '我的做法',
-    methodTitle: '把一个想法稳稳地做成产品。',
+    methodEyebrow: '做项目的习惯',
+    methodTitle: '我通常这样把想法一步步做出来。',
     workflow: [
-      ['先把问题说清楚', '明确用户真正要解决什么，以及哪些决定必须由人来做。'],
-      ['打通完整流程', '把界面、接口、数据、模型和部署环境连接起来。'],
-      ['用测试核对结果', '通过自动化测试、静态检查和来源记录发现问题。'],
-      ['给上线留好退路', '重要改动可以追踪，出现故障时也能备份和回滚。'],
+      ['先弄清楚要解决什么', '先把使用场景和边界想明白，避免一上来就堆功能。'],
+      ['先跑通一条完整流程', '从页面、接口到数据和部署，先让最重要的使用路径真正走通。'],
+      ['再用测试把问题找出来', '能自动检查的尽量自动检查，重要结果则保留来源和记录。'],
+      ['上线前想好怎么撤回来', '保留改动记录、备份和回滚办法，不把恢复寄托在临场发挥上。'],
     ],
-    latestEyebrow: '最近更新',
-    latestTitle: '记录项目里真正遇到的问题。',
+    latestEyebrow: '开发笔记',
+    latestTitle: '写下做项目时遇到的问题和想法。',
     readAll: '查看全部文章',
-    closingEyebrow: '关于 execute42',
-    closingTitle: '把 AI 放进产品，而不只是做一个聊天框。',
+    closingEyebrow: '继续了解',
+    closingTitle: '如果你想了解我，项目比自我介绍更直接。',
     closingBody:
-      '这里会持续更新项目案例、架构思路和开发笔记。你可以先看项目了解我做过什么，也可以到 GitHub 查看公开代码。',
-    about: '了解我在做什么',
+      '网站会继续更新项目进展和开发笔记。公开的代码都放在 GitHub；暂时不能公开的项目，我也会尽量把思路、现状和限制说清楚。',
+    about: '再认识一下我',
   },
   en: {
     eyebrow: 'FULL-STACK DEVELOPMENT · AI PRODUCTS',
@@ -270,6 +270,9 @@ const workflow = copy.workflow;
   }
   .lede {
     margin: 2rem 0;
+  }
+  .display-title {
+    overflow-wrap: anywhere;
   }
   .hero-note-link {
     align-self: center;

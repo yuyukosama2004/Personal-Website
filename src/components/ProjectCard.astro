@@ -13,7 +13,7 @@ const { project, index = 0, locale = 'zh' } = Astro.props;
 const { name, tagline, category, tech, accent, evidence, evidenceStats } = project.data;
 const categoryLabels = {
   zh: {
-    product: '本地优先产品',
+    product: '本地优先应用',
     research: '研究工具',
     engineering: '开发者工具',
     application: '全栈应用',
@@ -28,7 +28,7 @@ const categoryLabels = {
   },
 };
 const evidenceLabels = {
-  zh: { verified: '有可核对的工程证据', partial: '公开材料仍在整理', planned: '实验记录' },
+  zh: { verified: '已有测试结果', partial: '资料还在整理', planned: '实验阶段' },
   en: {
     verified: 'Evidence available',
     partial: 'Public material in progress',
@@ -37,7 +37,7 @@ const evidenceLabels = {
 };
 const text =
   locale === 'zh'
-    ? { tech: '技术栈', stats: '验证数据', measured: '统计日期', view: '查看项目' }
+    ? { tech: '技术栈', stats: '项目数据', measured: '统计日期', view: '查看详情' }
     : {
         tech: 'Technology stack',
         stats: 'Verification data',

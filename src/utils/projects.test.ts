@@ -64,6 +64,6 @@ describe('projectStatusLabel', () => {
         tier: 'lab',
         license: null,
       }),
-    ).toBe('个人实验 · 实验中');
+    ).toBe('个人实验 · 试验阶段');
   });
 });
