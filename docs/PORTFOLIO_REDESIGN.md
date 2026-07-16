@@ -2,7 +2,7 @@
 
 Decision date: 2026-07-15 (Asia/Shanghai)
 
-Status: **P0A and bilingual copy complete; media-gated promotion remains pending.**
+Status: **v1.1.0 implementation complete; PhoneMall promotion media remains a post-launch gate.**
 
 ## Positioning
 
@@ -69,7 +69,7 @@ P0A includes:
 - GitHub Profile README, Bio, descriptions and topics;
 - existing Astro, GitHub Actions, Nginx and self-hosted deployment.
 
-P0B is the real media package required to promote PhoneMall. Fake screenshots or generated product interfaces are not acceptable substitutes.
+The remaining media package is required only before promoting PhoneMall to the first featured position. It does not block the current production release. Fake screenshots or generated product interfaces are not acceptable substitutes.
 
 ## Non-goals
 
