@@ -47,7 +47,7 @@ export const sharedUi = {
     themeLabel: '切换明暗主题',
     languageLabel: 'Read in English',
     languageShort: 'EN',
-    footerLine: '这里记录项目，也记录那些没那么顺利的部分。',
+    footerLine: '认真做产品，也认真处理测试、部署和回滚。',
     about: '关于我',
     socialImageAlt: 'execute42 — 全栈 AI 应用与工程实践',
   },
