@@ -16,8 +16,8 @@ const { items, accent, locale = 'zh' } = Astro.props;
   aria-labelledby="system-map-title"
 >
   <div class="map-heading">
-    <p class="eyebrow">{locale === 'zh' ? '大致流程' : 'SYSTEM MAP'}</p>
-    <h2 id="system-map-title">{locale === 'zh' ? '一次操作会经过这些步骤' : 'How it works'}</h2>
+    <p class="eyebrow">{locale === 'zh' ? '核心流程' : 'SYSTEM MAP'}</p>
+    <h2 id="system-map-title">{locale === 'zh' ? '它是怎么运转的' : 'How it works'}</h2>
   </div>
   <ol style={`--steps:${items.length}`}>
     {
