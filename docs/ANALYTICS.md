@@ -1,5 +1,9 @@
 # Privacy-friendly analytics
 
+Operational status: **enabled in production**
+
+Last reviewed: 2026-07-16 (Asia/Shanghai)
+
 The production Nginx virtual host writes two tab-separated logs:
 
 - `/var/log/personal-website/analytics.log`: timestamp, status, method, path and referrer.
@@ -35,3 +39,14 @@ The dedicated `/var/log/personal-website` directory keeps these files outside Ng
 The repository includes the matching cron and logrotate definitions under `ops/cron` and
 `ops/logrotate`. They are installed by an administrator because the deploy account intentionally
 cannot write to `/etc`.
+
+## Reporting boundary
+
+Reports may describe aggregate page views, requested paths, 404 counts, referrers and fixed GitHub
+CTA redirects. They must not describe visitors, users, sessions, retention or conversion rates
+because the log format deliberately contains no stable visitor identifier.
+
+The first scheduled content-and-traffic review is tracked by
+[`CONTENT-104`](https://github.com/yuyukosama2004/Personal-Website/issues/61) in the August 2026
+post-launch milestone. Until a complete calendar month is available, the analytics installation
+should be described as operational rather than as evidence of audience growth.

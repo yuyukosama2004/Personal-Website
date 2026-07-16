@@ -1,3 +1,5 @@
+<!-- 已于 2026-07-16 按网站 v1.1.0 与线上 GitHub Profile 同步。 -->
+
 <p align="right">
   <a href="https://github.com/yuyukosama2004">English</a>
 </p>

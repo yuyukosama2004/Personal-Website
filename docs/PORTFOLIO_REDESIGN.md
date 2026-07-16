@@ -4,6 +4,8 @@ Decision date: 2026-07-15 (Asia/Shanghai)
 
 Status: **v1.1.0 implementation complete; PhoneMall promotion media remains a post-launch gate.**
 
+Release: [`v1.1.0 — Bilingual portfolio redesign`](https://github.com/yuyukosama2004/Personal-Website/releases/tag/v1.1.0)
+
 ## Positioning
 
 Chinese:
@@ -58,9 +60,9 @@ A public repository without an open-source license is labelled `PUBLIC REPOSITOR
 
 The PhoneMall case-study canonical URL is `/projects/phonemall/`. The previous `/projects/phonemall-ai/` path returns a permanent redirect after the new release exists. Profile, Sitemap, Open Graph and internal links use only the canonical URL.
 
-## Current implementation scope
+## Delivered implementation scope
 
-P0A includes:
+v1.1.0 includes:
 
 - positioning, navigation, SEO and About copy;
 - evidence-gated featured order;
@@ -70,6 +72,11 @@ P0A includes:
 - existing Astro, GitHub Actions, Nginx and self-hosted deployment.
 
 The remaining media package is required only before promoting PhoneMall to the first featured position. It does not block the current production release. Fake screenshots or generated product interfaces are not acceptable substitutes.
+
+The website implementation, bilingual copy and GitHub alignment are complete. The remaining media
+work is tracked as P1 issue
+[`WEB-702`](https://github.com/yuyukosama2004/Personal-Website/issues/66) in the August 2026
+post-launch milestone.
 
 ## Non-goals
 
@@ -96,3 +103,11 @@ As reviewed on 2026-07-15:
 - ecc-init: public, 25 default-branch commits, no GitHub Release, 149 tests passed and 2 skipped in the dated local audit, no standard open-source license.
 - The website contains six project entries and keeps private repository links hidden.
 - GitHub Profile README and Website are enabled.
+
+## Completion record
+
+- Portfolio and GitHub implementation: completed in PRs #68–#75.
+- Release-state and dependency cleanup: completed in PR #76.
+- M7 milestone: closed with no open implementation issues.
+- Production CI and deployment: passed for commit
+  `ef39e864f9427d5e6817d128d08768193aa9d05e`.

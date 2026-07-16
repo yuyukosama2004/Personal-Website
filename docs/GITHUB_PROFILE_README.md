@@ -1,3 +1,5 @@
+<!-- Synced with the live GitHub Profile for website release v1.1.0 on 2026-07-16. -->
+
 <p align="right">
   <a href="https://github.com/yuyukosama2004/yuyukosama2004/blob/main/README.zh-CN.md">简体中文</a>
 </p>
