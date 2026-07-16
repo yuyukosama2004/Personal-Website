@@ -1,29 +1,36 @@
 ---
 import { site } from '@/config/site';
+import { localizePath, sharedUi, type Locale } from '@/i18n';
 
 const path = Astro.url.pathname;
-const navigation = [
-  { href: '/', label: '首页' },
-  { href: '/projects', label: '项目' },
-  { href: '/blog', label: '博客' },
-  { href: '/search', label: '搜索' },
-  { href: '/about', label: '关于' },
-];
+interface Props {
+  locale: Locale;
+  languageHref: string;
+}
+const { locale, languageHref } = Astro.props;
+const ui = sharedUi[locale];
+const navigation = ui.navigation.map((item) => ({
+  href: localizePath(item.path, locale),
+  label: item.label,
+}));
+const normalizedPath = path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path;
+const isCurrent = (href: string) =>
+  normalizedPath === (href.endsWith('/') && href !== '/' ? href.slice(0, -1) : href);
 ---
 
 <header class="site-header">
   <div class="site-shell header-inner">
-    <a class="brand" href="/">
+    <a class="brand" href={localizePath('/', locale)}>
       <span aria-hidden="true">42</span>
       <strong>{site.name}</strong>
     </a>
 
-    <nav aria-label="主要导航">
+    <nav aria-label={ui.navigationLabel}>
       <ul>
         {
           navigation.map((item) => (
             <li>
-              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -33,7 +40,17 @@ const navigation = [
     </nav>
 
     <div class="header-actions">
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换深色或浅色主题">
+      <a
+        class="language-link"
+        href={languageHref}
+        lang={locale === 'zh' ? 'en' : 'zh-CN'}
+        aria-label={ui.languageLabel}
+      >
+        {ui.languageShort}
+      </a>
+      <a class="search-link" href={localizePath('/search', locale)} aria-label={ui.searchLabel}>⌕</a
+      >
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label={ui.themeLabel}>
         <span aria-hidden="true">◐</span>
       </button>
       <a class="github-link" href={site.githubCta} target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -101,7 +118,8 @@ const navigation = [
   }
 
   nav a,
-  .github-link {
+  .github-link,
+  .search-link {
     display: inline-flex;
     min-height: 2.5rem;
     align-items: center;
@@ -111,6 +129,26 @@ const navigation = [
     font-size: 0.88rem;
     font-weight: 650;
     text-decoration: none;
+  }
+
+  .language-link {
+    display: inline-flex;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .language-link:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
   }
 
   nav a:hover,
@@ -138,6 +176,18 @@ const navigation = [
     color: var(--text);
     cursor: pointer;
     font-size: 1.15rem;
+  }
+
+  .search-link {
+    width: 2.5rem;
+    justify-content: center;
+    padding: 0;
+    color: var(--text);
+    font-size: 1.2rem;
+  }
+
+  .search-link:hover {
+    background: var(--accent-soft);
   }
 
   .theme-toggle:hover {
@@ -179,6 +229,11 @@ const navigation = [
 
     .github-link {
       font-size: 0;
+    }
+
+    .language-link {
+      min-width: 2.25rem;
+      min-height: 2.25rem;
     }
 
     .github-link::before {

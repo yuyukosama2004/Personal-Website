@@ -10,7 +10,15 @@ const required = [
   'about/index.html',
   'blog/index.html',
   'projects/index.html',
+  'projects/phonemall/index.html',
   'search/index.html',
+  'en/index.html',
+  'en/about/index.html',
+  'en/blog/index.html',
+  'en/projects/index.html',
+  'en/projects/phonemall/index.html',
+  'en/search/index.html',
+  'en/rss.xml',
   'rss.xml',
   'robots.txt',
   'sitemap-index.xml',
@@ -73,6 +81,16 @@ for (const file of htmlFiles) {
     }
     if (!/<meta name="description" content="[^"]+"/.test(html)) {
       failures.push(`${relative}: missing meta description`);
+    }
+    if (
+      !/<link rel="alternate" hreflang="zh-CN" href="https:\/\/www\.execute42\.top\//.test(html)
+    ) {
+      failures.push(`${relative}: missing Chinese hreflang URL`);
+    }
+    if (
+      !/<link rel="alternate" hreflang="en" href="https:\/\/www\.execute42\.top\/en\//.test(html)
+    ) {
+      failures.push(`${relative}: missing English hreflang URL`);
     }
   }
 

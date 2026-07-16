@@ -1,4 +1,4 @@
-/var/log/nginx/personal-website.analytics.log /var/log/nginx/personal-website-github.log {
+/var/log/personal-website/analytics.log /var/log/personal-website/github.log {
     weekly
     rotate 13
     missingok

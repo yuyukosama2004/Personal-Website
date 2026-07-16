@@ -1,28 +1,84 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { localizePath, type Locale } from '@/i18n';
+import { projectStatusLabel } from '@/utils/projects';
 
 interface Props {
-  project: CollectionEntry<'projects'>;
+  project: CollectionEntry<'projects'> | CollectionEntry<'projectsEn'>;
   index?: number;
+  locale?: Locale;
 }
 
-const { project, index = 0 } = Astro.props;
-const { name, tagline, status, category, tech, accent } = project.data;
+const { project, index = 0, locale = 'zh' } = Astro.props;
+const { name, tagline, category, tech, accent, evidence, evidenceStats } = project.data;
+const categoryLabels = {
+  zh: {
+    product: '本地优先产品',
+    research: '研究工具',
+    engineering: '开发者工具',
+    application: '全栈应用',
+    lab: '个人实验',
+  },
+  en: {
+    product: 'Local-first product',
+    research: 'Research tooling',
+    engineering: 'Developer tooling',
+    application: 'Full-stack application',
+    lab: 'Personal lab',
+  },
+};
+const evidenceLabels = {
+  zh: {
+    verified: '已提供测试与构建记录',
+    partial: '公开材料整理中',
+    planned: '验证材料待补充',
+  },
+  en: {
+    verified: 'Evidence available',
+    partial: 'Public material in progress',
+    planned: 'Lab notes',
+  },
+};
+const text =
+  locale === 'zh'
+    ? { tech: '技术栈', stats: '验证数据', measured: '统计日期', view: '查看项目' }
+    : {
+        tech: 'Technology stack',
+        stats: 'Verification data',
+        measured: 'Measured',
+        view: 'View project',
+      };
 ---
 
 <article class="project-card panel" style={`--project-accent: ${accent}`}>
-  <a href={`/projects/${project.id}/`}>
+  <a href={localizePath(`/projects/${project.id}/`, locale)}>
     <div class="card-top">
-      <span>{String(index + 1).padStart(2, '0')} / {category}</span>
-      <span class="status">{status}</span>
+      <span>{String(index + 1).padStart(2, '0')} / {categoryLabels[locale][category]}</span>
+      <span class="status">{projectStatusLabel(project.data, locale)}</span>
     </div>
     <div class="project-mark" aria-hidden="true">{name.slice(0, 2).toUpperCase()}</div>
     <div>
       <h3>{name}</h3>
       <p>{tagline}</p>
-      <ul aria-label="技术栈">
+      <ul aria-label={text.tech}>
         {tech.slice(0, 4).map((item) => <li>{item}</li>)}
       </ul>
+      {
+        evidenceStats.length > 0 && (
+          <dl class="evidence-stats" aria-label={text.stats}>
+            {evidenceStats.map((stat) => (
+              <div title={`${text.measured}: ${stat.measuredAt.toISOString().slice(0, 10)}`}>
+                <dt>{stat.value}</dt>
+                <dd>{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+      <footer>
+        <span>{evidenceLabels[locale][evidence]}</span>
+        <strong>{text.view} →</strong>
+      </footer>
     </div>
   </a>
 </article>
@@ -98,6 +154,45 @@ const { name, tagline, status, category, tech, accent } = project.data;
     padding: 0;
     gap: 0.45rem;
     list-style: none;
+  }
+
+  .evidence-stats {
+    display: flex;
+    margin: 1.25rem 0 0;
+    gap: 1.5rem;
+  }
+
+  .evidence-stats div {
+    display: grid;
+    gap: 0.05rem;
+  }
+
+  .evidence-stats dt {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  .evidence-stats dd {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  footer strong {
+    color: var(--project-accent);
   }
 
   li {

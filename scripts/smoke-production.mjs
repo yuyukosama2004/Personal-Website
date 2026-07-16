@@ -28,10 +28,20 @@ const routes = [
   '/',
   '/projects/',
   '/projects/ecc-init/',
+  '/projects/phonemall/',
   '/blog/',
   '/blog/building-evidence-backed-research-mcp/',
   '/search/',
   '/about/',
+  '/en/',
+  '/en/projects/',
+  '/en/projects/ecc-init/',
+  '/en/projects/phonemall/',
+  '/en/blog/',
+  '/en/blog/building-evidence-backed-research-mcp/',
+  '/en/search/',
+  '/en/about/',
+  '/en/rss.xml',
   '/rss.xml',
   '/sitemap-index.xml',
   '/robots.txt',
@@ -49,6 +59,16 @@ assert(
   homeHtml.includes('<link rel="canonical" href="https://www.execute42.top/"'),
   'Homepage canonical URL is missing',
 );
+assert(homeHtml.includes('面向真实业务'), 'Chinese homepage copy is missing');
+assert(homeHtml.includes('href="/en/"'), 'Chinese homepage is missing its English switch');
+
+const englishHome = await request('/en/');
+const englishHomeHtml = await englishHome.text();
+assert(
+  englishHomeHtml.includes('I build AI products that work beyond the demo.'),
+  'English homepage copy is missing',
+);
+assert(englishHomeHtml.includes('href="/"'), 'English homepage is missing its Chinese switch');
 
 const requiredHeaders = [
   'content-security-policy',
@@ -72,7 +92,7 @@ assert(faviconBytes <= 5_000, `Favicon exceeds 5 KB: ${faviconBytes} bytes`);
 
 const missing = await request('/public-smoke-missing-route');
 assert(missing.status === 404, `Unknown route returned ${missing.status}`);
-assert((await missing.text()).includes('这里没有你要找的页面'), 'Custom 404 content is missing');
+assert((await missing.text()).includes('这个页面找不到了'), 'Custom 404 content is missing');
 
 for (const [path, expected] of [
   ['/go/github', 'https://github.com/yuyukosama2004'],
@@ -82,5 +102,18 @@ for (const [path, expected] of [
   assert(response.status === 302, `${path} returned ${response.status}`);
   assert(response.headers.get('location') === expected, `${path} redirected to an unexpected URL`);
 }
+
+const legacyPhoneMall = await fetch(`${origin}/projects/phonemall-ai/`, {
+  redirect: 'manual',
+});
+assert(
+  legacyPhoneMall.status === 301,
+  `/projects/phonemall-ai/ returned ${legacyPhoneMall.status}`,
+);
+assert(
+  legacyPhoneMall.headers.get('location') === 'https://www.execute42.top/projects/phonemall/',
+  'Legacy PhoneMall URL did not redirect to the canonical case study',
+);
+console.log('301 /projects/phonemall-ai/');
 
 console.log(`Public production smoke passed for ${origin}; favicon ${faviconBytes} bytes.`);

@@ -1,0 +1,337 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from '@/components/PostCard.astro';
+import SystemMap from '@/components/SystemMap.astro';
+import { site } from '@/config/site';
+import { localizePath, type Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { projectStatusLabel } from '@/utils/projects';
+
+interface Props {
+  project: CollectionEntry<'projects'> | CollectionEntry<'projectsEn'>;
+  posts: Array<CollectionEntry<'blog'> | CollectionEntry<'blogEn'>>;
+  locale: Locale;
+}
+const { project, posts, locale } = Astro.props;
+const canonical = `${site.url}${localizePath(`/projects/${project.id}/`, locale)}`;
+const statusLabel = projectStatusLabel(project.data, locale);
+const copy = {
+  zh: {
+    back: '全部项目',
+    repository: '查看公开仓库',
+    demo: '打开演示',
+    private: '源码仓库暂未公开',
+    type: '类型',
+    role: '角色',
+    roleValue: '个人项目 · 独立开发',
+    status: '状态',
+    demoLabel: '演示',
+    tech: '技术栈',
+    evidenceEyebrow: '验证情况',
+    activity: { active: '持续开发', maintained: '维护中', paused: '暂停开发' },
+    demos: { public: '可公开访问', internal: '仅内部使用', unavailable: '暂无公开演示' },
+    evidence: {
+      verified: '已提供测试与构建记录',
+      partial: '公开材料整理中',
+      planned: '验证材料待补充',
+    },
+    noEvidence:
+      '项目的界面截图与复现说明仍在整理。当前页面只展示已经确认的信息，不使用虚构素材或未经核对的数据。',
+    related: '相关开发笔记',
+  },
+  en: {
+    back: 'All projects',
+    repository: 'View public repository',
+    demo: 'Open demo',
+    private: 'The source repository is currently private',
+    type: 'Type',
+    role: 'Role',
+    roleValue: 'Personal project · Independent development',
+    status: 'Status',
+    demoLabel: 'Demo',
+    tech: 'Technology stack',
+    evidenceEyebrow: 'EVIDENCE',
+    activity: { active: 'Active development', maintained: 'Maintained', paused: 'Paused' },
+    demos: { public: 'Public demo', internal: 'Internal demo', unavailable: 'No public demo yet' },
+    evidence: {
+      verified: 'Engineering evidence available',
+      partial: 'Public material in progress',
+      planned: 'Evidence planned',
+    },
+    noEvidence:
+      'Real interface captures and reproducible material are still being prepared. This page does not substitute invented screenshots or unverified numbers.',
+    related: 'Related engineering notes',
+  },
+}[locale];
+const categoryLabels = {
+  zh: {
+    product: '本地优先产品',
+    research: '研究工具',
+    engineering: '开发者工具',
+    application: '全栈应用',
+    lab: '个人实验',
+  },
+  en: {
+    product: 'Local-first product',
+    research: 'Research tooling',
+    engineering: 'Developer tooling',
+    application: 'Full-stack application',
+    lab: 'Personal lab',
+  },
+}[locale];
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': project.data.githubUrl ? 'SoftwareSourceCode' : 'CreativeWork',
+  name: project.data.name,
+  description: project.data.summary,
+  url: canonical,
+  codeRepository: project.data.githubUrl ?? undefined,
+  ...(project.data.githubUrl ? { programmingLanguage: project.data.tech } : {}),
+};
+---
+
+<BaseLayout
+  title={project.data.name}
+  description={project.data.summary}
+  structuredData={structuredData}
+>
+  <article>
+    <header class="site-shell project-hero" style={`--project-accent:${project.data.accent}`}>
+      <div>
+        <a class="back" href={localizePath('/projects', locale)}>← {copy.back}</a><p
+          class="eyebrow"
+        >
+          {statusLabel}
+        </p><h1>{project.data.name}</h1><p class="lede">{project.data.tagline}</p><div
+          class="button-row"
+        >
+          {
+            project.data.githubUrl && (
+              <a
+                class="button primary"
+                href={`/go/github/${project.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {copy.repository} ↗
+              </a>
+            )
+          }{
+            project.data.demoUrl && (
+              <a class="button" href={project.data.demoUrl} target="_blank" rel="noreferrer">
+                {copy.demo} ↗
+              </a>
+            )
+          }{!project.data.githubUrl && <span class="private-note">{copy.private}</span>}
+        </div>
+        <dl class="project-meta">
+          <div><dt>{copy.type}</dt><dd>{categoryLabels[project.data.category]}</dd></div>
+          <div><dt>{copy.role}</dt><dd>{copy.roleValue}</dd></div>
+          <div><dt>{copy.status}</dt><dd>{copy.activity[project.data.activity]}</dd></div>
+          <div><dt>{copy.demoLabel}</dt><dd>{copy.demos[project.data.demoStatus]}</dd></div>
+        </dl>
+      </div>
+      <div class="project-mark" aria-hidden="true">
+        {project.data.name.slice(0, 2).toUpperCase()}
+      </div>
+    </header>
+    <div class="reading-shell project-body">
+      <p class="summary">{project.data.summary}</p><ul class="tech" aria-label={copy.tech}>
+        {project.data.tech.map((item) => <li>{item}</li>)}
+      </ul>
+      <section class="evidence-panel panel" aria-labelledby="evidence-heading">
+        <div>
+          <p class="eyebrow">{copy.evidenceEyebrow}</p>
+          <h2 id="evidence-heading">{copy.evidence[project.data.evidence]}</h2>
+        </div>
+        {
+          project.data.evidenceStats.length > 0 ? (
+            <dl>
+              {project.data.evidenceStats.map((stat) => (
+                <div>
+                  <dt>{stat.value}</dt>
+                  <dd>
+                    {stat.label} · {stat.measuredAt.toISOString().slice(0, 10)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p>{copy.noEvidence}</p>
+          )
+        }
+      </section>
+      <SystemMap items={project.data.flow} accent={project.data.accent} {locale} /><div
+        class="prose-content"
+      >
+        <slot />
+      </div>
+    </div>
+  </article>
+  {
+    posts.length > 0 && (
+      <section class="site-shell related">
+        <h2 class="section-title">{copy.related}</h2>
+        {posts.map((post) => (
+          <PostCard post={post} {locale} />
+        ))}
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .project-hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    min-height: 35rem;
+    padding-block: 7rem 4rem;
+    gap: 3rem;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 4rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-decoration: none;
+  }
+  h1 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(3rem, 9vw, 7rem);
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+  }
+  .project-mark {
+    display: grid;
+    width: clamp(9rem, 20vw, 15rem);
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--project-accent) 18%, transparent);
+    color: var(--project-accent);
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 800;
+    transform: rotate(8deg);
+  }
+  .private-note {
+    align-self: center;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+  .project-meta {
+    display: grid;
+    max-width: 42rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 3rem 0 0;
+    gap: 1px;
+    background: var(--line);
+  }
+  .project-meta div {
+    padding: 0.8rem;
+    background: var(--bg);
+  }
+  .project-meta dt {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+  }
+  .project-meta dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .project-body {
+    padding-block: 4rem 7rem;
+  }
+  .summary {
+    margin: 0 0 2rem;
+    font-size: 1.3rem;
+    font-weight: 650;
+  }
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 4rem;
+    padding: 0;
+    gap: 0.5rem;
+    list-style: none;
+  }
+  .tech li {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .evidence-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    margin-bottom: 4rem;
+    padding: 1.4rem;
+    gap: 2rem;
+  }
+  .evidence-panel h2,
+  .evidence-panel p {
+    margin: 0;
+  }
+  .evidence-panel > p {
+    max-width: 30rem;
+    color: var(--muted);
+  }
+  .evidence-panel dl {
+    display: flex;
+    margin: 0;
+    gap: 1.5rem;
+  }
+  .evidence-panel dl div {
+    display: grid;
+  }
+  .evidence-panel dt {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+  .evidence-panel dd {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+  .prose-content :global(h2) {
+    margin: 3rem 0 1rem;
+    font-size: 2rem;
+    letter-spacing: -0.04em;
+  }
+  .prose-content :global(p),
+  .prose-content :global(li) {
+    color: var(--muted);
+  }
+  .related {
+    padding-bottom: 6rem;
+  }
+  @media (max-width: 42rem) {
+    .project-hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .project-mark {
+      width: 8rem;
+    }
+    .project-meta {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .evidence-panel {
+      grid-template-columns: 1fr;
+    }
+    .evidence-panel dl {
+      flex-wrap: wrap;
+    }
+  }
+</style>

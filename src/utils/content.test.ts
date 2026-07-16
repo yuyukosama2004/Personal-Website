@@ -25,5 +25,6 @@ describe('content utilities', () => {
 
   it('formats dates in the site timezone', () => {
     expect(formatDate(new Date('2026-07-14T00:00:00+08:00'))).toBe('2026年7月14日');
+    expect(formatDate(new Date('2026-07-14T00:00:00+08:00'), 'en')).toBe('July 14, 2026');
   });
 });

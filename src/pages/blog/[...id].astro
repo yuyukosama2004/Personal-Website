@@ -20,4 +20,4 @@ const { post, previous, next } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<BlogPostLayout {post} {headings} {previous} {next}><Content /></BlogPostLayout>
+<BlogPostLayout {post} {headings} {previous} {next} locale="zh"><Content /></BlogPostLayout>

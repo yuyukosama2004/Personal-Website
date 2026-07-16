@@ -2,12 +2,22 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="页面不存在" description="请求的页面不存在。" noindex>
+<BaseLayout
+  title="页面不存在 / Page not found"
+  description="请求的页面不存在。The requested page could not be found."
+  noindex
+  alternatePath="/en/"
+>
   <section class="reading-shell not-found">
     <p class="eyebrow">404 / LOST SIGNAL</p>
-    <h1 class="display-title">这里没有你要找的页面。</h1>
-    <p class="lede">链接可能已经改变，也可能从未存在。</p>
-    <a class="button primary" href="/">返回首页</a>
+    <h1 class="display-title">这个页面找不到了。</h1>
+    <p class="lede">
+      链接可能已经改变，也可能从未存在。<br />The link may have changed or never existed.
+    </p>
+    <div class="button-row">
+      <a class="button primary" href="/">返回中文首页</a>
+      <a class="button" href="/en/">Go to English home</a>
+    </div>
   </section>
 </BaseLayout>
 

@@ -1,27 +1,30 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 
+import { localizePath, type Locale } from '@/i18n';
 import { formatDate } from '@/utils/content';
 import { getReadingTime } from '@/utils/reading-time';
 
 interface Props {
-  post: CollectionEntry<'blog'>;
+  post: CollectionEntry<'blog'> | CollectionEntry<'blogEn'>;
+  locale?: Locale;
 }
 
-const { post } = Astro.props;
+const { post, locale = 'zh' } = Astro.props;
 const minutes = getReadingTime(post.body ?? '');
 ---
 
 <article class="post-card">
-  <a href={`/blog/${post.id}/`}>
+  <a href={localizePath(`/blog/${post.id}/`, locale)}>
     <div class="post-meta">
-      <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time
+      <time datetime={post.data.publishedAt.toISOString()}
+        >{formatDate(post.data.publishedAt, locale)}</time
       >
-      <span>{minutes} 分钟阅读</span>
+      <span>{locale === 'zh' ? `约 ${minutes} 分钟` : `${minutes} min read`}</span>
     </div>
     <h3>{post.data.title}</h3>
     <p>{post.data.description}</p>
-    <ul aria-label="文章标签">
+    <ul aria-label={locale === 'zh' ? '文章标签' : 'Article tags'}>
       {post.data.tags.map((tag) => <li>{tag}</li>)}
     </ul>
   </a>

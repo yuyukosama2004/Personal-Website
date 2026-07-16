@@ -1,18 +1,48 @@
+<p align="right">
+  <a href="https://github.com/yuyukosama2004/yuyukosama2004/blob/main/README.zh-CN.md">简体中文</a>
+</p>
+
 # Hi, I'm yuyukosama2004 👋
 
-I build controllable, auditable and local-first AI tools.
+I build full-stack AI products and developer tools with Java, Vue, Python, RAG, and MCP.
 
-我关注 AI 应用、Agent 开发工作流与全栈工程，更在意模型输出如何被约束、验证和安全地交给人。
+Beyond the model response itself, I care about the data behind it, how results are checked, which actions require human approval, and how a deployed system can be tested, debugged, and rolled back.
 
-- 🌐 [Personal website](https://www.execute42.top)
-- 🧭 [Projects and case studies](https://www.execute42.top/projects/)
-- ✍️ [Technical notes](https://www.execute42.top/blog/)
+- 🌐 [Personal website](https://www.execute42.top/en/)
+- 🧭 [Project case studies](https://www.execute42.top/en/projects/)
+- ✍️ [Engineering notes](https://www.execute42.top/en/blog/)
 
 ## Featured work
 
-- [ecc-init](https://github.com/yuyukosama2004/ecc-init) — a lightweight, auditable Claude Code configuration initializer.
-- [NovelFlow](https://www.execute42.top/projects/novelflow/) — a local-first workspace for long-form AI writing with human control.
-- [GroundedSeek](https://www.execute42.top/projects/grounded-seek/) — evidence-backed research where conclusions remain traceable to sources.
-- [Guarded Agent Pipeline](https://www.execute42.top/projects/guarded-agent-pipeline/) — a guarded multi-model development workflow with explicit review gates.
+### [ecc-init](https://github.com/yuyukosama2004/ecc-init)
 
-The website is the public case-study layer for work that is still private or under active development. Public repositories link back to the corresponding architecture notes and project pages.
+Safely adds Claude Code configuration and skills to an existing project with backups, incremental merges, and rollback.
+
+`Python` `Claude Code` `CLI` `Backup` `Rollback`
+
+[Source](https://github.com/yuyukosama2004/ecc-init) · [Case study](https://www.execute42.top/en/projects/ecc-init/)
+
+### GroundedSeek
+
+A local-first research workspace that keeps claims traceable to sources, captured passages, and report history.
+
+`FastAPI` `MCP` `Playwright` `SQLite` `Web Research`
+
+[Case study](https://www.execute42.top/en/projects/grounded-seek/)
+
+### PhoneMall — RAG Shopping Assistant Platform
+
+A self-hosted Spring Cloud and Vue 3 commerce platform with a shopping assistant grounded in the current product catalog.
+
+`Java` `Spring Cloud` `Vue 3` `RAG` `Docker`
+
+[Case study](https://www.execute42.top/en/projects/phonemall/)
+
+## What I care about
+
+- Connecting domain models, interfaces, APIs, data, and deployment into a complete product.
+- Grounding RAG and MCP systems in real data rather than stopping at a chat demo.
+- Reducing change risk through tests, logs, backups, and rollback.
+- Keeping important model-driven actions behind explicit human approval.
+
+Some projects remain in private repositories while under active development. Their public case studies distinguish implemented work, available demonstrations, and ongoing experiments.
