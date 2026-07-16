@@ -9,9 +9,18 @@
 | GitHub 仓库 | `yuyukosama2004/Personal-Website` |
 | 生产域名 | `https://www.execute42.top` |
 | 博客路径 | `https://www.execute42.top/blog` |
-| 当前状态 | Production / v1.1.0 portfolio redesign in progress |
-| 文档版本 | v1.1-draft |
-| 最后更新 | 2026-07-15 |
+| 当前状态 | Production / v1.1.0 portfolio redesign complete |
+| 文档版本 | v1.1 |
+| 最后更新 | 2026-07-16 |
+
+---
+
+## 当前交付状态
+
+- `v1.1.0` 网站改版、双语内容、GitHub Profile 对齐、CI/CD 和生产部署均已完成。
+- M0–M6 已关闭；M7 的网站与 GitHub 实现已完成。
+- PhoneMall 真实截图、架构图和测试摘要属于上线后的项目推广素材，不阻塞当前版本。
+- 2026 年 8 月内容计划属于持续运营 Backlog，不计入 `v1.1.0` 完成门槛。
 
 ---
 
