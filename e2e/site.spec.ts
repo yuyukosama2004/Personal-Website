@@ -107,6 +107,28 @@ test('mobile layout has no horizontal overflow', async ({ page }) => {
   await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible();
 });
 
+test('section headings use the available desktop width in both languages', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+
+  for (const route of ['/', '/en/']) {
+    await page.goto(route);
+    const headings = page.locator('.section-heading h2');
+    await expect(headings.first()).toBeVisible();
+
+    for (const heading of await headings.all()) {
+      const metrics = await heading.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return {
+          lines: Math.round(element.getBoundingClientRect().height / parseFloat(style.lineHeight)),
+          width: element.getBoundingClientRect().width,
+        };
+      });
+      expect(metrics.lines).toBeLessThanOrEqual(2);
+      expect(metrics.width).toBeGreaterThan(700);
+    }
+  }
+});
+
 test('core content remains available without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
