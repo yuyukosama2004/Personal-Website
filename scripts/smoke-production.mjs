@@ -59,7 +59,7 @@ assert(
   homeHtml.includes('<link rel="canonical" href="https://www.execute42.top/"'),
   'Homepage canonical URL is missing',
 );
-assert(homeHtml.includes('我做能真正跑起来的 AI 产品'), 'Chinese homepage copy is missing');
+assert(homeHtml.includes('面向真实业务'), 'Chinese homepage copy is missing');
 assert(homeHtml.includes('href="/en/"'), 'Chinese homepage is missing its English switch');
 
 const englishHome = await request('/en/');
