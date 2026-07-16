@@ -1,14 +1,31 @@
 # Launch audit
 
-Audit date: 2026-07-15 (Asia/Shanghai)
+Initial audit date: 2026-07-15 (Asia/Shanghai)
 
-Status: **all v1.0.0 launch gates passed.**
+Latest verification: 2026-07-16 (Asia/Shanghai)
+
+Status: **all v1.0.0 launch gates and v1.1.0 release gates passed.**
+
+## v1.1.0 release verification
+
+- Release: [`v1.1.0 — Bilingual portfolio redesign`](https://github.com/yuyukosama2004/Personal-Website/releases/tag/v1.1.0)
+- Production commit: `ef39e864f9427d5e6817d128d08768193aa9d05e`
+- Pull request CI: formatting, lint, Astro diagnostics, 13 unit tests, production build and 10
+  Chromium browser scenarios passed.
+- Production workflow: build, immutable SSH deployment and resolver-independent public smoke test
+  passed in [run 29490194637](https://github.com/yuyukosama2004/Personal-Website/actions/runs/29490194637).
+- Current build output: 40 HTML pages, 37 Pagefind-indexed pages across Chinese and English, 13 unit
+  tests and 20 required system outputs.
+- Public checks return HTTP 200 for the Chinese home, projects and blog routes and the English home
+  route.
+- The M7 portfolio redesign milestone is closed. The remaining five open issues are P1 post-launch
+  content or project-evidence work and do not block production.
 
 ## Automated quality gates
 
-- `pnpm verify`: formatting, ESLint, Astro type/content checks, 6 unit tests, production build,
+- The original v1.0.0 `pnpm verify`: formatting, ESLint, Astro type/content checks, 6 unit tests, production build,
   Pagefind indexing and built-site link/SEO audit all pass.
-- Production output: 20 HTML pages, 19 indexed pages and 12 required system outputs.
+- Original v1.0.0 production output: 20 HTML pages, 19 indexed pages and 12 required system outputs.
 - `pnpm test:e2e`: 7 Chromium scenarios pass. Coverage includes core routes, project detail,
   Pagefind search, theme persistence, keyboard skip link, fixed GitHub CTA routes, 390 px layout,
   JavaScript-disabled content and custom 404 behavior.
@@ -99,3 +116,11 @@ virtual hosts. The final deployment, active symlink and deployment ledger match 
 3. The site owner confirmed the mainland-China ICP filing status on 2026-07-15.
 4. GitHub Profile Website points to `https://www.execute42.top`.
 5. Resolver-independent GitHub Actions public smoke passes after production deployment.
+
+## Known non-blocking follow-up
+
+- PhoneMall remains below the first featured position until real sanitized screenshots, an
+  architecture diagram and a dated reproducible test summary are available.
+- Monthly traffic conclusions wait for a complete reporting period.
+- Comments, newsletter, CMS, dynamic GitHub widgets and an online playground remain intentionally
+  out of scope.
