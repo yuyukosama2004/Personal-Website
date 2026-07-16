@@ -16,11 +16,11 @@ export function projectStatusLabel(project: ProjectState, locale: Locale = 'zh')
           : '公开仓库'
         : project.tier === 'lab'
           ? '个人实验'
-          : '私有项目案例';
+          : '私有项目';
     const maturity = {
       alpha: 'Alpha',
       beta: 'Beta',
-      experimental: '实验中',
+      experimental: 'Experimental',
     }[project.maturity];
     return `${visibility} · ${maturity}`;
   }
