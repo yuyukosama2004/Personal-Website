@@ -4,14 +4,14 @@ tagline: A local writing workspace where the author stays in charge
 summary: A local-first AI workspace for long-form fiction that separates model suggestions from accepted story canon, giving the author final authority over every lasting change.
 category: product
 tier: more
-order: 4
-sourceVisibility: private
+order: 5
+sourceVisibility: public
 maturity: alpha
 activity: active
 demoStatus: unavailable
 evidence: partial
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/novelflow
 demoUrl: null
 tech: [FastAPI, React, TypeScript, SQLite]
 evidenceStats: []

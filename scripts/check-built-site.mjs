@@ -10,12 +10,14 @@ const required = [
   'about/index.html',
   'blog/index.html',
   'projects/index.html',
+  'projects/eval42/index.html',
   'projects/phonemall/index.html',
   'search/index.html',
   'en/index.html',
   'en/about/index.html',
   'en/blog/index.html',
   'en/projects/index.html',
+  'en/projects/eval42/index.html',
   'en/projects/phonemall/index.html',
   'en/search/index.html',
   'en/rss.xml',
@@ -28,7 +30,15 @@ const required = [
 ];
 
 const files = [];
-const serverRoutes = new Set(['/go/github', '/go/github/ecc-init']);
+const serverRoutes = new Set([
+  '/go/github',
+  '/go/github/ecc-init',
+  '/go/github/eval42',
+  '/go/github/grounded-seek',
+  '/go/github/guarded-agent-pipeline',
+  '/go/github/novelflow',
+  '/go/github/phonemall',
+]);
 const seenServerRoutes = new Set();
 const walk = async (directory) => {
   for (const entry of await readdir(directory, { withFileTypes: true })) {

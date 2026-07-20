@@ -4,7 +4,7 @@ tagline: 用自己的订阅系统跟踪真正关心的更新
 summary: 用 FreshRSS、RSSHub、changedetection.io 和 GitHub Release Feed 搭建自托管订阅系统，在一个地方跟踪软件发布与网页变化。
 category: lab
 tier: lab
-order: 6
+order: 7
 sourceVisibility: private
 maturity: experimental
 activity: maintained

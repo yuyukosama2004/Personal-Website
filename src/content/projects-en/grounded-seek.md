@@ -5,13 +5,13 @@ summary: A local-first web research service and MCP workspace that organizes sea
 category: research
 tier: featured
 order: 2
-sourceVisibility: private
+sourceVisibility: public
 maturity: alpha
 activity: active
 demoStatus: unavailable
 evidence: partial
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/grounded-seek
 demoUrl: null
 tech: [FastAPI, MCP, Playwright, SQLite]
 evidenceStats: []

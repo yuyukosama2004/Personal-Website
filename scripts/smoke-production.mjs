@@ -28,6 +28,7 @@ const routes = [
   '/',
   '/projects/',
   '/projects/ecc-init/',
+  '/projects/eval42/',
   '/projects/phonemall/',
   '/blog/',
   '/blog/building-evidence-backed-research-mcp/',
@@ -36,6 +37,7 @@ const routes = [
   '/en/',
   '/en/projects/',
   '/en/projects/ecc-init/',
+  '/en/projects/eval42/',
   '/en/projects/phonemall/',
   '/en/blog/',
   '/en/blog/building-evidence-backed-research-mcp/',
@@ -97,6 +99,14 @@ assert((await missing.text()).includes('这个页面找不到了'), 'Custom 404 
 for (const [path, expected] of [
   ['/go/github', 'https://github.com/yuyukosama2004'],
   ['/go/github/ecc-init', 'https://github.com/yuyukosama2004/ecc-init'],
+  ['/go/github/eval42', 'https://github.com/yuyukosama2004/eval42'],
+  ['/go/github/grounded-seek', 'https://github.com/yuyukosama2004/grounded-seek'],
+  [
+    '/go/github/guarded-agent-pipeline',
+    'https://github.com/yuyukosama2004/Guarded-Multi-Model-Development-Pipeline',
+  ],
+  ['/go/github/novelflow', 'https://github.com/yuyukosama2004/novelflow'],
+  ['/go/github/phonemall', 'https://github.com/yuyukosama2004/rag-shopping-assistant-platform'],
 ]) {
   const response = await request(path, { headers: { referer: `${origin}/` } });
   assert(response.status === 302, `${path} returned ${response.status}`);

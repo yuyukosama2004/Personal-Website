@@ -1,4 +1,4 @@
-<!-- 已于 2026-07-16 按网站 v1.1.0 与线上 GitHub Profile 同步。 -->
+<!-- 已于 2026-07-20 按仓库可见性复核结果与线上 GitHub Profile 同步。 -->
 
 <p align="right">
   <a href="https://github.com/yuyukosama2004">English</a>
@@ -24,13 +24,21 @@
 
 [源码](https://github.com/yuyukosama2004/ecc-init) · [项目案例](https://www.execute42.top/projects/ecc-init/)
 
+### [Eval42](https://github.com/yuyukosama2004/eval42)
+
+面向 AI 应用的 CI-first 评测工具，用版本化用例、确定性指标、已审阅基线和质量门禁生成可复现报告。
+
+`Python` `AI 评测` `CI` `JSONL` `MIT`
+
+[源码](https://github.com/yuyukosama2004/eval42) · [项目案例](https://www.execute42.top/projects/eval42/)
+
 ### GroundedSeek
 
 把搜索、浏览、引用和版本记录串成一套可以回头核对的研究流程。
 
 `FastAPI` `MCP` `Playwright` `SQLite` `Web Research`
 
-[项目案例](https://www.execute42.top/projects/grounded-seek/)
+[源码](https://github.com/yuyukosama2004/grounded-seek) · [项目案例](https://www.execute42.top/projects/grounded-seek/)
 
 ### PhoneMall — RAG 智能导购商城
 
@@ -38,7 +46,7 @@
 
 `Java` `Spring Cloud` `Vue 3` `RAG` `Docker`
 
-[项目案例](https://www.execute42.top/projects/phonemall/)
+[源码](https://github.com/yuyukosama2004/rag-shopping-assistant-platform) · [项目案例](https://www.execute42.top/projects/phonemall/)
 
 ## 我在意什么
 
@@ -47,4 +55,4 @@
 - 用测试、日志、备份和回滚降低改动风险。
 - 对模型驱动的重要操作保留清楚的人工确认。
 
-部分项目仍在私有仓库中持续开发；公开案例会明确区分已经完成、可以演示和仍在实验的内容。
+目前大部分作品集仓库已经公开。仓库可见不等于采用了开源许可证，也不代表已经达到生产可用状态；项目案例仍会分别说明实现证据、成熟度、演示情况和后续工作。

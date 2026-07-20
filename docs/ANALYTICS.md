@@ -2,7 +2,7 @@
 
 Operational status: **enabled in production**
 
-Last reviewed: 2026-07-16 (Asia/Shanghai)
+Last reviewed: 2026-07-20 (Asia/Shanghai)
 
 The production Nginx virtual host writes two tab-separated logs:
 
@@ -12,8 +12,10 @@ The production Nginx virtual host writes two tab-separated logs:
 Neither log contains an IP address, Cookie header or User-Agent. The design can count page views,
 404 responses and GitHub CTA clicks, but intentionally cannot identify unique or returning visitors.
 
-All website-to-GitHub buttons use a fixed same-origin route. Nginx records that route and returns a
-302 to an allowlisted GitHub URL. It does not accept a caller-provided redirect URL.
+All website-to-GitHub buttons use fixed same-origin routes. Nginx records each route and returns a
+302 to an allowlisted profile or repository URL. The allowlist currently covers the profile,
+ecc-init, Eval42, GroundedSeek, NovelFlow, Guarded Agent Pipeline and PhoneMall; it does not accept a
+caller-provided redirect URL.
 
 ## Monthly report
 

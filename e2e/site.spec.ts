@@ -5,12 +5,14 @@ test('core routes render with their primary heading', async ({ page }) => {
     '/',
     '/projects/',
     '/projects/ecc-init/',
+    '/projects/eval42/',
     '/projects/phonemall/',
     '/blog/',
     '/about/',
     '/en/',
     '/en/projects/',
     '/en/projects/ecc-init/',
+    '/en/projects/eval42/',
     '/en/projects/phonemall/',
     '/en/blog/',
     '/en/about/',
@@ -56,8 +58,17 @@ test('GitHub calls to action use fixed tracked routes', async ({ page }) => {
     await expect(link).toHaveAttribute('rel', /noreferrer/);
   }
 
-  await page.goto('/projects/ecc-init/');
-  await expect(page.locator('a[href="/go/github/ecc-init"]')).toBeVisible();
+  for (const project of [
+    'ecc-init',
+    'eval42',
+    'grounded-seek',
+    'guarded-agent-pipeline',
+    'novelflow',
+    'phonemall',
+  ]) {
+    await page.goto(`/projects/${project}/`);
+    await expect(page.locator(`a[href="/go/github/${project}"]`)).toBeVisible();
+  }
 });
 
 test('featured projects follow the evidence-gated order', async ({ page }) => {
