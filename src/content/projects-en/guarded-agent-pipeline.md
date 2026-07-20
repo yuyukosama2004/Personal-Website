@@ -4,14 +4,14 @@ tagline: A multi-model development pipeline with checks and an explicit human bo
 summary: A workflow that coordinates Codex, Claude Code, and DeepSeek with deterministic verification and human-controlled pushing, so model agreement is never mistaken for engineering correctness.
 category: engineering
 tier: lab
-order: 5
-sourceVisibility: private
+order: 6
+sourceVisibility: public
 maturity: experimental
 activity: active
 demoStatus: unavailable
 evidence: partial
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/Guarded-Multi-Model-Development-Pipeline
 demoUrl: null
 tech: [TypeScript, MCP, PowerShell, Git]
 evidenceStats: []

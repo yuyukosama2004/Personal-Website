@@ -30,14 +30,15 @@ Every public number records its value, measurement date and source. Numbers with
 
 ## Project hierarchy
 
-| Project                | Current tier | Public evidence                         |
-| ---------------------- | ------------ | --------------------------------------- |
-| ecc-init               | Featured 1   | Public repository, tests and CI         |
-| GroundedSeek           | Featured 2   | Partial case-study evidence             |
-| PhoneMall              | Featured 3   | Private repository audit; media pending |
-| NovelFlow              | More work    | Partial case-study evidence             |
-| Guarded Agent Pipeline | Labs         | Experimental record                     |
-| AI RSS Stack           | Labs         | Experimental record                     |
+| Project                | Current tier | Public evidence                     |
+| ---------------------- | ------------ | ----------------------------------- |
+| ecc-init               | Featured 1   | Public repository, tests and CI     |
+| GroundedSeek           | Featured 2   | Public repository; partial evidence |
+| PhoneMall              | Featured 3   | Public repository; media pending    |
+| Eval42                 | More work    | MIT repository, release and CI      |
+| NovelFlow              | More work    | Partial case-study evidence         |
+| Guarded Agent Pipeline | Labs         | Public experimental repository      |
+| AI RSS Stack           | Labs         | Private experimental record         |
 
 PhoneMall moves to Featured 1 only after it has at least four sanitized screenshots, one architecture diagram and a dated, reproducible test summary. Until then the site must not imply that a public demo exists.
 
@@ -99,10 +100,18 @@ Each repository uses its own branch and pull request. Website presentation, prod
 
 As reviewed on 2026-07-15:
 
-- PhoneMall: private, 109 default-branch commits, 11 tags, 11 releases, latest `v0.7.0-alpha.1`; 4 services and 39 backend tests in the dated project audit.
 - ecc-init: public, 25 default-branch commits, no GitHub Release, 149 tests passed and 2 skipped in the dated local audit, no standard open-source license.
-- The website contains six project entries and keeps private repository links hidden.
 - GitHub Profile README and Website are enabled.
+
+Visibility and release follow-up reviewed on 2026-07-20:
+
+- PhoneMall is public at `rag-shopping-assistant-platform`, currently documents
+  `v0.8.0-alpha.3`, and has no selected open-source license.
+- GroundedSeek, NovelFlow and Guarded Agent Pipeline are public and remain labelled by their existing
+  maturity and evidence levels.
+- Eval42 is a public MIT-licensed Alpha with an installable `v0.1.0a1` prerelease and CI evidence.
+- The website contains seven project entries. Six expose public source links; AI RSS Stack remains a
+  private lab and therefore exposes no repository link.
 
 ## Completion record
 

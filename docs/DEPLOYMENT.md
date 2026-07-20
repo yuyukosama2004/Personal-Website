@@ -43,6 +43,10 @@ The deploy script validates the archive, switches the symlink, and requests `/`,
 `/projects/`, and `/rss.xml`. The independent public smoke job also verifies the bilingual production
 routes and external HTTPS behavior. A failed deployment smoke test restores the previous symlink.
 
+Public repository CTA redirects are an explicit Nginx allowlist under `/go/github/<project>`. Adding
+a public source link requires updating the project content, Nginx location, built-site route audit
+and production smoke expectations together; caller-provided redirect targets remain forbidden.
+
 The v1.1.0 release deployed commit `ef39e864f9427d5e6817d128d08768193aa9d05e`. Build, SSH upload,
 atomic release switch and public smoke verification all passed in
 [Deploy production run 29490194637](https://github.com/yuyukosama2004/Personal-Website/actions/runs/29490194637).

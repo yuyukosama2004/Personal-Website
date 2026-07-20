@@ -1,4 +1,4 @@
-<!-- Synced with the live GitHub Profile for website release v1.1.0 on 2026-07-16. -->
+<!-- Synced with the live GitHub Profile after the repository visibility review on 2026-07-20. -->
 
 <p align="right">
   <a href="https://github.com/yuyukosama2004/yuyukosama2004/blob/main/README.zh-CN.md">简体中文</a>
@@ -24,13 +24,21 @@ Safely adds Claude Code configuration and skills to an existing project with bac
 
 [Source](https://github.com/yuyukosama2004/ecc-init) · [Case study](https://www.execute42.top/en/projects/ecc-init/)
 
+### [Eval42](https://github.com/yuyukosama2004/eval42)
+
+A CI-first evaluation tool for AI applications, with versioned cases, deterministic metrics, reviewed baselines, quality gates, and reproducible reports.
+
+`Python` `Evaluation` `CI` `JSONL` `MIT`
+
+[Source](https://github.com/yuyukosama2004/eval42) · [Case study](https://www.execute42.top/en/projects/eval42/)
+
 ### GroundedSeek
 
 A local-first research workspace that keeps claims traceable to sources, captured passages, and report history.
 
 `FastAPI` `MCP` `Playwright` `SQLite` `Web Research`
 
-[Case study](https://www.execute42.top/en/projects/grounded-seek/)
+[Source](https://github.com/yuyukosama2004/grounded-seek) · [Case study](https://www.execute42.top/en/projects/grounded-seek/)
 
 ### PhoneMall — RAG Shopping Assistant Platform
 
@@ -38,7 +46,7 @@ A self-hosted Spring Cloud and Vue 3 commerce platform with a shopping assistant
 
 `Java` `Spring Cloud` `Vue 3` `RAG` `Docker`
 
-[Case study](https://www.execute42.top/en/projects/phonemall/)
+[Source](https://github.com/yuyukosama2004/rag-shopping-assistant-platform) · [Case study](https://www.execute42.top/en/projects/phonemall/)
 
 ## What I care about
 
@@ -47,4 +55,4 @@ A self-hosted Spring Cloud and Vue 3 commerce platform with a shopping assistant
 - Reducing change risk through tests, logs, backups, and rollback.
 - Keeping important model-driven actions behind explicit human approval.
 
-Some projects remain in private repositories while under active development. Their public case studies distinguish implemented work, available demonstrations, and ongoing experiments.
+Most portfolio repositories are now public. Public visibility does not imply an open-source license or production readiness; each case study still separates implementation evidence, maturity, demo availability, and remaining work.

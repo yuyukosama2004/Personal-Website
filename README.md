@@ -11,6 +11,7 @@
 - Production: deployed and verified by GitHub Actions
 - Completed scope: M0–M7
 - Remaining work: five P1 content and project-evidence tasks in the August 2026 post-launch backlog
+- Portfolio inventory: seven project case studies; six link to public source repositories and one remains a private lab
 
 ## Development
 
@@ -33,6 +34,7 @@ corepack pnpm test:e2e
 ## Content routes
 
 - `/projects/`：项目列表与详情
+- `/projects/eval42/`：Eval42 CI-first AI 评测工具案例
 - `/projects/phonemall/`：PhoneMall canonical 案例页；旧路径由 Nginx 301 跳转
 - `/blog/`：Markdown 博客、标签和相关文章
 - `/search/`：浏览器本地全文搜索

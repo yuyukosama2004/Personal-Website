@@ -124,3 +124,20 @@ virtual hosts. The final deployment, active symlink and deployment ledger match 
 - Monthly traffic conclusions wait for a complete reporting period.
 - Comments, newsletter, CMS, dynamic GitHub widgets and an online playground remain intentionally
   out of scope.
+
+## Repository visibility follow-up — 2026-07-20
+
+The public portfolio inventory was reconciled against the GitHub account after the repository
+visibility changes:
+
+- Eval42 was added as the seventh bilingual case study.
+- Eval42, ECC Init, GroundedSeek, PhoneMall, NovelFlow and Guarded Agent Pipeline now link to public
+  source repositories.
+- AI RSS Stack remains a private lab and exposes no source link.
+- Public visibility is documented separately from licensing, release readiness and evidence
+  quality. Only repositories with an explicit license are described as open source.
+- Fixed analytics redirects and the Nginx allowlist now cover all six public-source case studies.
+
+The updated site passes formatting, lint, Astro checks, the production build, 13 unit tests and 10
+Playwright tests. The build contains 42 HTML pages, 39 indexed pages and all 22 required output
+routes.

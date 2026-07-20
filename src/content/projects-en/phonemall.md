@@ -5,13 +5,13 @@ summary: A Spring Cloud and Vue 3 commerce platform covering transactions, inven
 category: application
 tier: featured
 order: 3
-sourceVisibility: private
+sourceVisibility: public
 maturity: alpha
 activity: active
 demoStatus: unavailable
 evidence: verified
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/rag-shopping-assistant-platform
 demoUrl: null
 tech: [Spring Cloud, Vue 3, RAG, MySQL, Docker]
 evidenceStats:
@@ -42,7 +42,7 @@ The system retrieves candidates from products that are currently available, then
 
 ## Verification
 
-The review snapshot dated 2026-07-15 contains four backend services and 39 backend tests. Repository CI also checks the backend, frontend build, Compose and Nginx configuration, source scanning, and container image security. The repository remains private, so this page contains only sanitized case-study information.
+The review snapshot dated 2026-07-15 contains four backend services and 39 backend tests. Repository CI also checks the backend, frontend build, Compose and Nginx configuration, source scanning, and container image security. The source repository is now public, so readers can inspect the implementation and release history directly. Because the repository has no selected open-source license, the site labels it a public repository rather than open source.
 
 ## Trade-offs and limitations
 

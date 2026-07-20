@@ -4,14 +4,14 @@ tagline: 让 AI 帮忙写长篇，但故事仍由作者决定
 summary: 一个面向长篇小说的本地优先 AI 写作工具。它把模型建议、待修改草稿和作者确认的故事事实分开，让作者始终掌握最终决定权。
 category: product
 tier: more
-order: 4
-sourceVisibility: private
+order: 5
+sourceVisibility: public
 maturity: alpha
 activity: active
 demoStatus: unavailable
 evidence: partial
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/novelflow
 demoUrl: null
 tech: [FastAPI, React, TypeScript, SQLite]
 evidenceStats: []

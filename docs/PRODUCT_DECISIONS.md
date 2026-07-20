@@ -10,6 +10,11 @@ The site now positions the owner as a full-stack AI application and agent toolin
 
 Repository visibility, maturity, activity, demo availability and evidence level are separate facts. A public repository without a chosen open-source license must not be labelled Open Source.
 
+The 2026-07-20 visibility review confirmed public source repositories for ecc-init, Eval42,
+GroundedSeek, PhoneMall, NovelFlow and Guarded Agent Pipeline. AI RSS Stack remains a private lab.
+Visibility changes add source links but do not automatically change project tier, maturity, evidence
+level or demo status.
+
 ## Comments: still deferred
 
 Comments are not part of v1.1.0. The current articles are technical case studies, and there is no

@@ -4,7 +4,7 @@ tagline: Bringing scattered updates back into a reader I control
 summary: A self-hosted reading stack built with FreshRSS, RSSHub, changedetection.io, and GitHub release feeds to follow software releases and website changes from one place.
 category: lab
 tier: lab
-order: 6
+order: 7
 sourceVisibility: private
 maturity: experimental
 activity: maintained

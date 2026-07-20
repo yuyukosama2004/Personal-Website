@@ -4,14 +4,14 @@ tagline: 让多个模型协作，但不让它们替人做最终决定
 summary: 把 Codex、Claude Code 与 DeepSeek 组织成一套有自动检查、过程记录和人工确认的开发流程，避免把“几个模型都同意”误当成代码一定正确。
 category: engineering
 tier: lab
-order: 5
-sourceVisibility: private
+order: 6
+sourceVisibility: public
 maturity: experimental
 activity: active
 demoStatus: unavailable
 evidence: partial
 license: null
-githubUrl: null
+githubUrl: https://github.com/yuyukosama2004/Guarded-Multi-Model-Development-Pipeline
 demoUrl: null
 tech: [TypeScript, MCP, PowerShell, Git]
 evidenceStats: []
