@@ -1,5 +1,8 @@
 # Personal Website
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/yuyukosama2004/Personal-Website/actions/workflows/ci.yml/badge.svg)](https://github.com/yuyukosama2004/Personal-Website/actions/workflows/ci.yml)
+
 [`www.execute42.top`](https://www.execute42.top) 的中英双语个人网站与 Markdown 博客项目。中文使用根路径，英文页面统一位于 `/en/`。
 
 网站用于展示全栈 AI 应用和开发者工具，记录项目解决的问题、技术取舍、验证情况与后续计划，并把开发笔记、项目案例和 GitHub 仓库连接起来。
