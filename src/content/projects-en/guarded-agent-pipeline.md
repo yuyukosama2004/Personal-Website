@@ -23,7 +23,7 @@ flow:
     Deterministic checks,
     Human approval,
   ]
-relatedPosts: []
+relatedPosts: [guarded-multi-agent-dev-pipeline]
 accent: '#805d48'
 ---
 

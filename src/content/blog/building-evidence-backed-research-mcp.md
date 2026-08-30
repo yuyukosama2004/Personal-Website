@@ -1,7 +1,7 @@
 ---
 title: 怎样让 Web Research MCP 的结论有据可查
 description: 从搜索结果到可以复核的结论，中间还需要保存来源、关联引用、展示冲突和记录版本，而不只是给 Agent 一个浏览器工具。
-publishedAt: 2026-07-14
+publishedAt: 2026-07-12
 tags: [MCP, Web Research, 可验证 AI]
 draft: false
 featured: true

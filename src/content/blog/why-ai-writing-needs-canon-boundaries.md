@@ -1,7 +1,7 @@
 ---
 title: AI 写长篇，为什么要把“建议”和“正史”分开
 description: 模型可以快速生成情节和文字，但长篇创作要保持一致，就必须分开模型建议、待修改草稿和作者已经确认的故事事实。
-publishedAt: 2026-07-14
+publishedAt: 2026-06-24
 tags: [AI 写作, Human-in-the-loop, 架构]
 draft: false
 featured: true

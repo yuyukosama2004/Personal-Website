@@ -16,7 +16,7 @@ demoUrl: null
 tech: [TypeScript, MCP, PowerShell, Git]
 evidenceStats: []
 flow: [明确任务范围, 模型实现, 独立复核, 运行自动检查, 人工确认]
-relatedPosts: []
+relatedPosts: [guarded-multi-agent-dev-pipeline]
 accent: '#805d48'
 ---
 

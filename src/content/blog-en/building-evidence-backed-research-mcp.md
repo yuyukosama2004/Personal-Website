@@ -1,7 +1,7 @@
 ---
 title: Building an Evidence-backed Web Research MCP
 description: Moving from search results to reviewable conclusions requires source snapshots, claim links, conflict handling, and versioned artifacts—not just a browser tool.
-publishedAt: 2026-07-14
+publishedAt: 2026-07-12
 tags: [MCP, Web Research, Verifiable AI]
 draft: false
 featured: true
