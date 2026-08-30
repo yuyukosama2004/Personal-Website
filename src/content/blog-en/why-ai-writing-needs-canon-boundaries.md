@@ -1,7 +1,7 @@
 ---
 title: Why Long-form AI Writing Needs a Canon Boundary
 description: Models can generate plot ideas and prose quickly, but long-form work stays coherent only when suggestions, drafts, and accepted facts remain separate.
-publishedAt: 2026-07-14
+publishedAt: 2026-06-24
 tags: [AI Writing, Human-in-the-loop, Architecture]
 draft: false
 featured: true
